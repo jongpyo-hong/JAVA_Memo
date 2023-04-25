@@ -1,0 +1,66 @@
+조인
+	- 테이블 간의 연결
+
+1. *등가조인(동등조인)
+	- 동일한 값을 가지고 테이블 연결 (동일한 값이 있어야 한다)
+	- 내부조인 (INNER JOIN)
+	
+	EX) SELECT * FROM EMP E, DEPT D
+			WHERE E.DEPTNO = D.DEPTNO; 
+			-> DEPTNO라는 동일한 값이 있다.
+			
+2. 비등가조인
+	- 동일하지 않은 값으로 테이블 연결
+	- 범위 검색시 암묵적으로 테이블 조인
+	
+	EX) SELECT * FROM EMP E, SALGRADE S
+		WHERE E.SAL BETWEEN S.LOSAL AND S.HISAL;
+		
+3. 셀프 조인
+	- 같은 테이블 내에서 조인
+	
+	EX) SELECT 
+			E1.EMPNO,
+			E1.ENAME,
+			E1.MGR 관리자번호,
+			E2.ENAME 관리자명
+	FROM EMP E1, EMP E2
+	WHERE E1.MGR = E2.EMPNO;
+	
+4. 외부조인(OUTER JOIN)
+	기준 테이블 데이터 + 추가정보(있으면 조회, 없으면 NULL)
+									(+)
+									EX) SELECT * FROM DEPT D, DEPT_SUB S
+											WHERE D.DEPTNO = S.DEPTNO(+); // + 가없으면 조회X 있으면 NULL값 조회
+									
+	기준 테이블이 왼쪽 -> 왼쪽 외부 조인(LEFT OUTER JOIN)
+	기준 테이블이 오른쪽 -> 오른쪽 외부 조인(RIGHT OUTER JOIN)
+	
+	양쪽 외부 조인 -> FULL OUTER JOIN
+	(양쪽 테이블에서 추가 데이터가 있으면 표기)
+	- 오라클과 MSSQL 에만 있는기능, MYSQL에는 없다
+	
+5. SQL 표준 - JOIN
+
+1) 동등조인
+* NATURAL JOIN
+- 기본키와 외래키
+- 기본키와 외래키의 명칭이 동일
+	EX) SELECT * FROM EMP NATURAL JOIN DEPT; 
+	// EMP와 DEPT의 기본키, 외래키가 DEPTNO로 동일, 조회
+
+*[INNER] JOIN ~ USING (공통 컬럼명)
+	- 공통 컬럼
+	EX) SELECT * FROM EMP JOIN DEPT USING(DEPTNO);
+	// 
+	EX2) SELECT * FROM EMP E JOIN DEPT D USING(DEPTNO)
+			WHERE E.SAL > 1000;
+	//
+	
+* [INNER] JOIN ~ ON D.DEPTNO = E.DEPTNO
+	EX) SELECT * FROM EMP E JOIN DEPT D ON E.DEPTNO = D.DEPTNO;
+	
+* OUTER JOIN
+		LEFT OUTER JOIN
+		RIGHT OUTER JOIN
+		FULL OUTER JOIN

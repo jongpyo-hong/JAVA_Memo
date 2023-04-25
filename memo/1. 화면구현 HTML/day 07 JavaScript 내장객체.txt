@@ -1,0 +1,21 @@
+내장객체
+
+자바스크립트 코어 
+	- 내장 생성자 객체
+		Object
+		...
+	- 내장 객체
+		Math
+		JSON
+		
+호스트 객체 - 런타임 환경에 따른 객체
+(웹브라우저 객체)
+	window
+		location
+		history
+		screen
+		navigator
+		document
+		
+		
+원시타입에서 마침표(.) -> 생성자 객체가 생성 -> 완료 -> 제로

@@ -1,0 +1,6 @@
+내장 생성자 연습
+
+1. Object
+
+- Object.assign()
+const 

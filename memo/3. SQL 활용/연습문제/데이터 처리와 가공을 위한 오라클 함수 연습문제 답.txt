@@ -1,0 +1,114 @@
+Q1) EMP 테이블에서 사원이름을 대문자, 소문자, 첫글자만 대문자로 출력하기
+A : SELECT UPPER(ENAME), LOWER(ENAME), INITCAP(ENAME) FROM EMP;
+
+Q2) EMP 테이블의 사원들 이름은 각 몇바이트인지 출력하기
+A : SELECT LENGTHB(ENAME) FROM EMP;
+
+Q2-2) EMP 테이블 내의 직책이름이 6글자 이상인 데이터 출력하기
+A : SELECT JOB FROM EMP WHERE LENGTH(JOB) >= 6;
+
+Q3) EMP 테이블의 모든 사원 이름을 세번째 글자부터 끝까지 출력하기
+A : SELECT ENAME, SUBSTR(ENAME,3) "3번째 글짜부터" FROM EMP;
+
+Q4) 010-1234-5678 (-)를 (/)로 바꾸어 출력하기
+A: SELECT REPLACE('010-1234-5678', '-', '/') FROM DUAL;
+
+Q5) 주민번호 941230-1111111, 전화번호 010-1234-5678
+	위 개인정보의 뒷자리를 오라클 함수를 이용해 '*'로 출력하기
+	
+A: SELECT RPAD('941128-', 14, '*') 주민번호, RPAD('010-1234-', 13, '*') 전화번호 FROM DUAL;
+		  
+Q6) 오라클 함수를 이용해 EMPNO, ENAME 두정보를 합쳐, EMPNO : ENAME 옆 정보처럼 나오도록 출력하기
+A : SELECT EMPNO, ENAME, CONCAT(EMPNO,CONCAT(' : ', ENAME)) "사원번호 : 이름" FROM EMP;
+	
+Q7) Q6을 CONCAT() 이용하지 않고 출력하기
+A : SELECT EMPNO, ENAME, EMPNO || ' : ' || ENAME "사원번호 : 이름" FROM EMP;
+
+Q8) EMP 테이블의 모든 사원들 급여를 십의자리에서 반올림한 후 출력하기
+A : SELECT ROUND(SAL, -3) FROM EMP;
+
+Q9) 테이블 내 직원들의 연봉을 백의 자리에서 버림 후 출력하기
+A : SELECT TRUNC(SAL * 12, -4) FROM EMP;
+
+Q10) 입사 5주년이된 EMPNO, ENAME, HIREDATE, WORK5YEAR 의 데이터로 출력하기
+A : SELECT EMPNO, ENAME, HIREDATE, ADD_MONTHS(HIREDATE, 60) "WORK5YEAR" FROM EMP;
+
+Q10-2) 입사한지 40년 미만인 사원 데이터 출력하기
+A: SELECT EMPNO, ENAME, HIREDATE FROM EMP WHERE SYSDATE < ADD_MONTHS(HIREDATE, 480);
+
+Q11) SCOTT의 입사날짜와 현재날짜의 개월 수를 출력하기
+A : SELECT ROUND(MONTHS_BETWEEN(HIREDATE, SYSDATE)) FROM EMP WHERE ENAME='SCOTT'; 
+
+Q12) 현재날짜와, 6개월후의 첫 월요일을 출력하기
+A : SELECT SYSDATE, NEXT_DAY(ADD_MONTHS(SYSDATE, 6),'월') "6개월후 첫 월요일" FROM DUAL;
+
+Q13) 7월과 11월의 마지막 날짜 출력하기
+A : SELECT LAST_DAY(ADD_MONTHS(SYSDATE, 3)) "7월", 
+	LAST_DAY(ADD_MONTHS(SYSDATE, 7)) "11월" FROM DUAL;
+
+Q14) 현재 날짜를 몇년, 몇월, 몇일, 무슨요일인지 문자열로 출력하기
+A : SELECT TO_CHAR(SYSDATE, 'YY') "몇년", TO_CHAR(SYSDATE, 'MM') "몇월",
+			TO_CHAR(SYSDATE, 'DD') "몇일", TO_CHAR(SYSDATE, 'DAY') "요일" FROM DUAL;
+
+Q15) 1982년 9월 1일 이후에 입사한 사원 정보 출력하기
+A : SELECT * FROM EMP WHERE HIREDATE > TO_DATE('1981/09/01', 'YYYY/MM/DD');
+
+Q16) EMP 테이블내의 직책이 MANAGE인사람은 급여를 10%, SALESMAN 인사람은 5%, ANALYST인사람은 그대로,
+		나머지는 3% 인상된 급여로 소수점 없이 출력하기
+A : SELECT EMPNO, ENAME, JOB, SAL,
+			ROUND(DECODE(JOB,
+						'MANAGER', SAL * 1.1,
+						'SALESMAN', SAL * 1.05,
+						'ANALYST', SAL,
+						SAL * 1.03)) 인상급여 FROM EMP;
+
+Q17) EMP 테이블 내의 수당(COMM)이 없으면 '해당사항 없음', 0원이면 '수당없음', 있으면 '수당 : ?' 으로 출력하기
+
+A: SELECT EMPNO, ENAME, COMM,
+		CASE
+			WHEN COMM IS NULL THEN '해당사항 없음'
+			WHEN COMM = 0 THEN '수당없음'
+			WHEN COMM > 0 THEN '수당 : ' || COMM
+		END 수당현황 FROM EMP;
+
+***Q18) EMPNO, MASKING_EMPNO, ENAME, MASKING_ENAME
+		위 정보를 출력하는데, MASKING_EMPNO 에는 사원번호 앞 두자리 외 뒷자리를 '*' 로 출력,
+		MASKING_ENAME에는 사원이름의 첫글자 외 나머지 글자를 '*' 로 출력하는데, 이름이 5글자 이상
+		6글자 미만인 사원정보만 출력하기 예) 7788 77** SCOTT S****
+		
+A : SELECT EMPNO, RPAD(SUBSTR(EMPNO, 3), 4, '*') "MASKING_EMPNO", 
+	ENAME, RPAD(SUBSTR(ENAME, 1, 1), LENGTH(ENAME), '*') "MASKING_ENAME" 
+	FROM EMP WHERE LENGTH(ENAME) >= 5 AND LENGTH(ENAME) < 6;
+
+***Q19) EMP 테이블의 사원들 평균 근무일 수 는 21.5일 이다. 하루 근무시간을 8시간으로 잡고
+		사원들의 하루 급여(일급)과 시급을 계산하여, 일급은 소수 세번째 자리에서 버리고
+		시급은 소수 두번째 자리에서 반올림하세요
+
+A : SELECT EMPNO, ENAME, SAL, TRUNC(SAL/21.5, 2), ROUND(SAL/21.5/8, 1) FROM EMP;
+	
+***Q20) EMP 테이블내의 사원들은 입사날 기준으로 3개월후 월요일이 정직원이 되는날입니다.
+		사원번호, 사원이름, 입사날, 정직원이 되는날짜, 수당(COMM)을 출력하는데, 수당값이 없는 직원은
+		N/A로 출력하세요
+		
+A : SELECT EMPNO, ENAME, HIREDATE,
+			TO_CHAR(NEXT_DAY(ADD_MONTHS(HIREDATE, 3),'월'), 'YYYY-MM-DD') "정직원 전환",
+			NVL(TO_CHAR(COMM), 'N/A')"수당여부" FROM EMP;
+			
+***Q21) EMP 테이블의 EMPNO, ENAME, MGR, CHG_MGR을 출력하기
+		CHG_MGR의 조건은 직속상관의 사원번호가 존재하지 않을 경우 : 0000
+					   직속상관의 사원번호 앞 두자리가 75**일 경우 : 5555
+					   직속상관의 사원번호 앞 두자리가 76**일 경우 : 6666
+					   직속상관의 사원번호 앞 두자리가 77**일 경우 : 7777
+					   직속상관의 사원번호 앞 두자리가 78**일 경우 : 8888
+					   그외 직속상관 사원번호의 경우는 본래 직속상관 사원번호 그대로 출력
+					   
+A : SELECT EMPNO, ENAME, MGR,
+			CASE
+				WHEN MGR IS NULL THEN '0000'
+				WHEN SUBSTR(MGR, 1, 2) = 75 THEN '5555'
+				WHEN SUBSTR(MGR, 1, 2) = 76 THEN '6666'
+				WHEN SUBSTR(MGR, 1, 2) = 77 THEN '7777'
+				WHEN SUBSTR(MGR, 1, 2) = 78 THEN '8888'
+				ELSE TO_CHAR(MGR)
+				END CHG_MGR FROM EMP;
+

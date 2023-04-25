@@ -1,0 +1,5 @@
+인텔리 J
+jdk다운로드
+
+settings/ Editer-> auto -> Add unambiguous imports on the fly
+						font -> size 설정

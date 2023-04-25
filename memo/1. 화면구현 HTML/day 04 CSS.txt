@@ -1,0 +1,150 @@
+레이아웃
+BOX-SIZING :
+	넓이, 높이 기준
+		- content-box; - 기본값 - 차지하는 내용의 크기
+			- 너비, 높이 -> 내용물의 사이즈
+		- border-box; - 경계선을 기준으로 내용의 크기 결정
+			- 너비, 높이 -> 경계선의 너비, 높이
+			
+border : 경계선
+	border-width : 두께
+	border-style : solid(직선) | dotted(점선) | dashed(얇은점선)
+	border-color : 경계선 색상
+	
+		border : 두께 스타일 색상 ; = 한꺼번에 작성도 가능하다.
+			border-left : 두께 스타일 색상 ;
+			border-right : 두께 스타일 색상 ;
+			border-bottom : 두께 스타일 색상 ;
+			border-top : 두께 스타일 색상 ;
+			-> 개별적으로도 작성이 가능하다
+
+ex) 
+	margin-top : ...
+	padding-bottom : ...
+	
+	border-radius : 수치 ; - 모서리가 수치만큼 둥글어 진다
+	
+
+*** 포지션 : 배치
+position
+	
+		static : 정적인 - 고정된 위치(기본값), 움직이지 않는다.
+	
+	상대적 -> 배치의 기준
+		relative : 현재 요소의 위치 
+		
+		absolute : 
+			1. 웹문서 전체 (좌측 상단이 기준)
+			2. 조상 태그에 상대 배치 속성(relative, absolute, fixed)이 있는 경우
+				- 기준이 조상태그의 위치
+				
+		fixed : 현재 보이는 화면(viewport) 기준
+	
+	
+	top : 수치만큼 위 -> 아래
+	bottom : 아래 -> 위
+	left : 좌 -> 우
+	right : 우 -> 좌
+	
+	z-index : 층위
+				-	숫자가 높을 수록 앞쪽배치,
+				-	낮을 수록 뒷쪽 배치
+				-	상대배치에서만 가능
+				
+float
+		left | right
+		
+float 속성을 제거 -> 다른 요소에 영향 X
+clear
+	left | right | both
+	
+	
+*** 미디어 쿼리
+@media all and (max-width :
+						-> 최대 사이즈 까지 적용
+					 min-width :  ) {
+						-> 최소 사이즈 부터 적용
+					}
+					
+배경 (background)
+	background-color : 색상명, rgb, rgba, hex코드
+	background-image : 
+						url("경로")
+						
+	background-repeat : 
+						repeat-x; -> 좌, 우 반복
+						repeat-y; -> 상, 하 반복
+						no-repeat -> 반복없음
+						
+	background-position : 배경 이미지 배치
+						background-position : 좌우 상하;
+						
+						background-position : 100px 200px
+								-> 좌에서 우로 100px 이동
+								-> 상에서 하로 200px 이동
+								
+				background-position : left | right | center,   top | bottom | center
+				
+background : [색상(없으면x 있으면 적용)], 이미지(url('이미지 경로'),
+				  반복속성(repeat-x,y, no-repeat), 위치 (좌우, 상하)
+				  -> 1) 색상 2) 이미지 3) 반복속성 4) 위치 순서로 적용가능
+				  
+				  
+overflow :
+		visible; 넘치더라도 보이는 속성 (기본값)
+		hidden; 넘치면 감추는 속성
+		scroll; 스크롤바 생성 (항상 생성)
+		auto; 내용이 영역을 넘어 섰을때만 생성
+		
+transition : 스타일 적용 변경될 때 전환 효과
+	transition-property : 스타일 속성, ....
+	transition-duration : 전환효과 지속시간(초 단위 1s -> 1초, 0.5s -> 0.5초)
+	transition-timing-function : 애니메이션 효과
+										linear | ease | ease-in | ease-out | ease-in-out
+										
+	transition-delay : 전환효과 시작전 대기 시간(초 단위 1s -> 1초)
+	
+	
+	transition : 속성(property), 지속시간(duration), 애니메이션(timing-function), 대기시간(delay)
+	1)property 2)duration 3)timing-function 4)delay 순서로 적용
+	
+
+*** flexbox
+	display: flex ;
+		-> * 부모가 아닌 "자식 요소"의 배치 통제
+		
+		flex-direction
+				: row (좌 -> 우)
+				: row-reverse (우 -> 좌)
+				: column (상 -> 하)
+				: column (하 -> 상)
+				
+		justify-content : flex의 좌우 배치
+				: flex-start - 왼쪽(기본값)
+				: flex-end - 오른쪽
+				: flex-center - 중간
+				
+			**	: space-around
+			**	: space-evenly : 여백을 동등하게
+			**	: space-between
+			
+		align-items : flex의 상하 배치
+				: stretch - 높이를 보모 태그에 맞게 늘린다(기본값)
+				: flex-start - 위쪽
+				: center - 중간
+				: flex-end - 아래쪽
+				
+		flex-wrap : nowrap - 한줄(기본값)
+					  warp -> 꽉차면 다음칸
+					  
+					  
+		자식 태그
+		flex-grow : 비율 - 여백을 차지하는 비율
+		
+		
+		text-decoration
+				: underline - 밑줄
+				: italic - 기울림
+				: none - 제거
+		
+		outline (input)

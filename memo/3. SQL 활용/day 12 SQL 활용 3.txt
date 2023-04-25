@@ -1,0 +1,274 @@
+데이터 처리와 가공을 위한 오라클 함수
+
+1. 내장 함수의 종류
+- 단일행 함수
+	- 하나의 행의 값 사용
+		ROUND -> 반올림
+			EX) SELECT ROUND(SAL, -2), SAL, ENAME FROM EMP; 
+	
+- 다중행 함수
+	- 여러행의 값을 사용
+		SUM -> 합계
+			EX) SELECT SUM(SAL) FROM EMP; 
+
+2. 문자함수
+	1) UPPER : 소문자 -> 대문자
+	EX) SELECT * FROM EMP WHERE UPPER(ENAME)=UPPER('Scott');
+	
+	2) LOWER : 대문자 -> 소문자
+	EX) SELECT * FROM EMP WHERE lower(ENAME)=lower('SCOTT');
+	
+	3) INITCAP : 첫문자를 대문자로
+	EX) SELECT LOWER(ENAME) 소문자, INITCAP(ENAME) "첫글자 대문자" FROM EMP;
+	
+	4) LENGTH : 문자 갯수
+	EX) SELECT LENGTH('한글 ABC') FROM DUAL; // 공백포함 6자
+	EX2) SELECT * FROM EMP WHERE LENGTH(ENAME) > 5;  // ENAME이 5자 이상 선택
+	
+	5) LENGTHB : 바이트 갯수
+	EX) SELECT LENGTH('한글 ABC') FROM DUAL; // 공백포함 10바이트 (한글하나=3바이트)
+		참고) MySQL
+				LENGTH() : 바이트 갯수
+				CHAR_LENGTH() : 문자 갯수
+	
+	6) SUBSTR : 문자열 추출
+		SUBSTR(문자열, 시작위치, 추출갯수)
+		SUBSTR(문자열, 시작위치) : 시작위치부터 끝까지
+		
+		- 시작 위치는 1부터 시작
+			EX) SELECT JOB, SUBSTR(JOB, 1, 5) FROM EMP; // JOB에서 첫번째 문자열부터 5번째 문자열에 해당하는 문자열 추출
+			EX2) SELECT JOB, SUBSTR(JOB, 3) FROM EMP; // JOB에서 3번째 문자열부터 끝까지 추출
+			EX3) SELECT JOB, SUBSTR(JOB, -3, 2) FROM EMP; // JOB에서 뒤에서 3번째 문자열부터 2개 추출(-3,-2 문자열)
+
+	7) INSTR
+			INSTR("문자열", "찾는 단어")
+				-> 찾은 경우는 위치값(1부터 시작하는 위치)
+				-> 없을 경우는 0을 반환
+				
+				LIKE의 포함관계 (%단어%) 대체
+				
+				EX) SELECT * FROM EMP WHERE INSTR(ENAME, 'L') > 0; -- ENAME LIKE '%L%'
+				
+		참고)
+			문장.indexOf(단어)
+				-> 단어의 위치(0부터 시작하는 위치)
+				-> 없을 경우 -1
+				
+	8) REPLACE : 문자열 치환
+		REPLACE(문자열, "찾는문자", "변경할 문자")
+		
+		전화번호 검색
+		010-0000-0000
+		010.0000.0000
+		010_0000_0000
+		
+		EX) SELECT * FROM EMP_FK WHERE REPLACE(MOBILE,'-','') LIKE '01000000000';
+		
+	9) LPAD - 왼쪽 채움
+			LPAD(문자열, 총 자리수, '채울 문자')
+			주문번호
+			0001
+			0002
+			0003
+			0100
+			
+			EX) SELECT LPAD(COMM, 4, 0) FROM EMP; // 4자리로 지정, 빈칸은 0으로 지정
+	
+	10) RPAD - 오른쪽 채움
+	
+			EX) SELECT RPAD(COMM, 4, 0) FROM EMP; // 4자리로 지정, 빈칸은 0으로 지정
+	
+	11) CONCAT() : 문자열 결합
+		CONCAT(문자열, 문자열)
+		
+			오라클 : 매개변수가 반드시 2개
+			MySQL : CONCAT (...매개변수) (가변매개변수 사용 가능)
+			
+			EX) SELECT ENAME, JOB, CONCAT(ENAME, ' : JOB')"직원명 : 직책" FROM EMP;
+			EX2) SELECT ENAME, JOB, CONCAT(CONCAT(ENAME,(' : ')), JOB) "직원명 : 직책" FROM EMP;
+			
+		- 문자열 결합 연산자 ||
+			
+			EX) SELECT ENAME, JOB, ENAME || ' : ' || JOB "직원명 : 직책" FROM EMP;
+			EX2) SELECT ENAME, JOB, '['|| ENAME || ' : ' || JOB || ']' "직원명 : 직책" FROM EMP;
+			
+	12) TRIM()
+			- 공백 제거(문자열제거)
+			- 제거의 방향(왼쪽, 오른쪽, 양쪽)
+			왼쪽 : LEADING
+			EX) SELECT TRIM(LEADING FROM '   	ABC		') FROM DUAL;
+			EX2) SELECT TRIM(LEADING '_' FROM '_____ABC_____') FROM DUAL;
+			
+			오른쪽 : TRAILING
+			EX) SELECT TRIM(TRAILING FROM'     ABC     ') FROM DUAL;
+			EX2) SELECT TRIM(TRAILING '_' FROM '_____ABC_____') FROM DUAL;
+	
+			양쪽 : BOTH
+			EX) SELECT TRIM(BOTH FROM '     ABC     ') FROM DUAL;
+			EX2) SELECT TRIM(BOTH '_' FROM '_____ABC_____') FROM DUAL;
+			
+		TRIM (방향, '제거할 문자열' FROM 기존의문자열)
+		
+	13) LTRIM(),  RTRIM()
+			LTRIM('문자열') : 왼쪽 공백 제거						
+			EX) SELECT LTRIM('     ABC     ') || 'DEF' FROM DUAL;
+			
+			LTRIM('문자열', '문자') : 왼쪽의 문자 제거
+			EX) SELECT LTRIM('_____ABC_____', '_') || 'DEF' FROM DUAL;						
+			
+			RTRIM('문자열') : 오른쪽 공백 제거						
+			EX) SELECT RTRIM('     ABC     ') || 'DEF' FROM DUAL;
+			
+			RTRIM('문자열', '문자') : 오른쪽의 문자 제거
+			EX) SELECT RTRIM('_____ABC_____', '_') || 'DEF' FROM DUAL;			
+
+
+3. 숫자함수
+
+	1) ROUND : 반올림
+		ROUND(수치) : 반올림 위치 = 0
+		ROUND(수치, 반올림 위치)
+			반올림 위치 : 양수 -> 소수점 자리
+							  음수 -> 정수 자리 // 음수가 있으면 일의자리가 0 십의자리 -1...
+	
+	EX) SELECT ROUND(1234.5678) FROM DUAL; -- 1235
+
+		SELECT ROUND(1234.5678, 1) FROM DUAL; -- 1234.6
+
+		SELECT ROUND(1234.5678, 2) FROM DUAL; -- 1234.57
+
+		SELECT ROUND(1234.5678, -1) FROM DUAL; -- 1230
+		
+	2) CEIL : 올림
+	EX) SELECT CEIL(10.2) FROM DUAL; -- 11
+
+	3) FLOOR : 버림
+	EX) SELECT FLOOR(11.5) FROM DUAL; -- 11
+	 
+	4) TRUNC : 절삭
+	EX) SELECT TRUNC(1235.123, -1) FROM DUAL; -- 1230 
+	-> 반올림과 위치가 같다, 음수가 있으면 일의자리가 0
+	 
+	5) MOD : 나머지
+	 EX) SELECT MOD(10, 3) FROM DUAL; --1
+	 
+	 
+4. 날짜함수
+
+1) 날짜 데이터 + 숫자 -> 숫자 만큼 일수가 증가
+날짜 데이터 - 숫자 -> 숫자 만큼 일수가 감소
+
+EX) SELECT SYSDATE "지금", 
+		SYSDATE -1 "어제", 
+		SYSDATE +1 "내일",
+		SYSDATE + 7 "일주일 후" FROM DUAL;
+
+2) 날짜 데이터 - 날짜 데이터 -> 두 날짜 사이의 일수 차이
+EX) SELECT HIREDATE, CEIL (SYSDATE - HIREDATE) "경과일수" FROM EMP;
+
+날짜 데이터 + 날짜 데이터 -> 연산 불가
+
+3) ADD_MONTHS : 달 기준으로 증가, 감소
+
+EX) SELECT ADD_MONTHS(SYSDATE, 3) "3개월 후",
+		ADD_MONTHS(SYSDATE,-3) "3개월 전" FROM DUAL;
+		
+4) MONTHS_BETWEEN(날짜, 날짜) : 날짜와 날짜 사이의 개월 수
+
+EX) SELECT HIREDATE, CEIL(MONTHS_BETWEEN(SYSDATE, HIREDATE)) "경과 개월수" FROM EMP; 
+
+5) NEXT_DAY : 다음 요일
+	NEXT_DAY(날짜, '요일')
+		-> 날짜와 가장 가까운 다음 요일
+		
+		EX) SELECT NEXT_DAY(SYSDATE, '토') FROM DUAL; - 2023-03-25
+		EX) SELECT NEXT_DAY(SYSDATE, '금') FROM DUAL; - 2023-03-31
+
+6) LAST_DAY : 달의 마지막 일
+	EX) SELECT LAST_DAY(SYSDATE) FROM DUAL; - 오늘날짜 기준 달의 마지막 날짜
+	
+자료형 변환 함수
+
+1) TO_CHAR(숫자, 앞 숫자이상의 수치) : 숫자, 날짜 데이터 -> 형식화된 문자
+	숫자 -> 문자 EX) SELECT TO_CHAR(10000000, '999,999,999,999') FROM DUAL; - 숫자를 형식화된 문자로 변환
+	
+	날짜 -> 문자 EX) SELECT TO_CHAR(SYSDATE, 'HH:MI:SS') "HH",
+							TO_CHAR(SYSDATE, 'HH12:MI:SS') "HH12",
+							TO_CHAR(SYSDATE, 'HH24:MI:SS') "HH24" FROM DUAL;
+
+
+
+2) TO_NUMBER(형식화된문자, 그이상의 수치(9,999,999)) : 형식화된 문자(10,000)로 되어있는 숫자 -> 숫자
+	EX) SELECT TO_NUMBER('$1,000,000.00', '$9,999,999.00') + 2000 FROM DUAL;
+	
+3) TO_DATE : 형식화된 문자로된 날짜 -> 실제날짜
+	EX) SELECT * FROM EMP 
+		 WHERE HIREDATE BETWEEN TO_DATE('01-01-1981','MM-DD-YYYY')
+		 AND TO_DATE('01-01-1982','MM-DD-YYYY');
+
+
+	YYYY, RRRR -> 4자리 연도
+	YY, RR
+		YY -> 현재 년도 기준
+				81 -> 2081
+				EX) SELECT TO_DATE('81-02-20', 'YY-MM-DD') FROM DUAL; -> 2081-02-20
+		RR -> 가까운 년도 기준
+				81 -> 1981
+				EX) SELECT TO_DATE('81-02-20', 'RR-MM-DD') FROM DUAL; -> 1981-02-20
+	
+예상가능한 문자 -> 오라클이 자동 형변환
+EX) SELECT '1000'(문자열) + 2000 FROM DUAL; - 3000
+
+
+NULL 처리 함수
+-> NULL은 값이 없음 -> 연산 불가
+
+1) NVL(컬럼명, 기본값-NULL일때) 
+	EX) SELECT ENAME, (SAL * 12 + NVL(COMM,0)) "연봉" FROM EMP; 
+	
+2) NVL2(컬럼명, 값이 있을때, NULL일때)
+	EX) SELECT ENAME, COMM, 
+		 (SAL * 12 + NVL(COMM,0)) "연봉",
+		 NVL2(COMM, '있음', '없음') "커미션 여부" FROM EMP; 
+
+3) DECODE() - 오라클 전용 함수
+	부서 10 -> 연봉 1.1배
+	부서 20 -> 연봉 1.2배
+	부서 30 -> 연봉 1배
+	부서 40 -> 연봉 2배
+	
+		EX) SELECT ENAME, DEPTNO, SAL "급여",
+		DECODE(DEPTNO, 10, SAL * 1.1,
+						20, SAL * 1.2,
+						30, SAL,
+						40, SAL * 2) "내년 급여" FROM EMP ORDER BY DEPTNO;
+						
+4) CASE ~ WHEN THEN ~ END
+		
+	 - 값의 일치여부
+	 - 조건식
+		
+	EX) SELECT ENAME, DEPTNO, SAL "급여",
+		CASE DEPTNO
+			WHEN 10 THEN SAL * 1.1
+			WHEN 20 THEN SAL * 1.2
+			WHEN 30 THEN SAL
+			WHEN 40 THEN SAL * 2 END "내년 급여" FROM EMP ORDER BY DEPTNO;
+			
+	EX2) SELECT ENAME, SAL "급여",
+		CASE
+			WHEN SAL < 1000 THEN 'LOW'
+			WHEN SAL >= 1000 AND SAL < 3000 THEN 'MIDDLE'
+			WHEN SAL >= 3000 THEN 'HIGH'
+		END "급여 등급"
+		FROM EMP;
+		
+	ELSE : 매칭되는 부분이 없을 때
+	
+		EX) SELECT ENAME, DEPTNO, SAL "급여",
+			CASE DEPTNO
+			WHEN 10 THEN SAL * 1.1
+			WHEN 20 THEN SAL * 1.2
+			WHEN 40 THEN SAL * 2
+			ELSE SAL
+			END "내년 급여" FROM EMP ORDER BY DEPTNO;

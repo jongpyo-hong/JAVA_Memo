@@ -1,0 +1,98 @@
+책 1~5장 연습문제
+
+** 데이터 베이스 연결
+
+sqlplus 계정명/비밀번호
+
+순서
+1. 연결 sqlplus system/_aA123456
+2. 언락 ALTER USER scott IDENTIFIED BY tiger ACCOUNT UNLOCK;
+3. 변경 CONN scott/tiger
+
+계정 - 대소문자 구분X
+비밀번호 - 대소문자 구분
+
+
+
+
+**읽기의 일관성 - 데이터 조작 전 상태의 내용이 일관적으로 조회,출력,검색되는 특성
+
+
+데이터베이스는 여러 곳(여러사용자, 여러 응용프로그램) 에서 동시에 접근하여 
+데이터를 관리,사용하는 것이 목적이므로 대부분 수많은 세선이 동시에 연결되어 있다.
+읽기 일관성이란 어떤 특정 세션에서 테이블의 데이터를 변경 중 일 때 그 외 다른 세션에서는 
+데이터의 변경이 확정되기 전까지 변경사항을 알 필요가 없으므로, 데이터를 변경 중인 세션을 제외한 
+나머지 세션에서는 현재 진행 중인 변경과 무관한 본래의 데이터를 보여 주는 특성을 의미한다.
+
+** 사전테이블 조회
+
+** 테이블만들기
+
+EX)
+	CREATE TABLE EMP_DDL (
+	EMPNO NUMBER(4),		- 직원번호
+	ENAME VARCHAR2(10),	- 직원이름
+	JOB VARCHAR2(9),			- 직책
+	MGR NUMBER(4),			- 매니져
+	HIGEDATE DATE,			- 입사 날짜
+	SAL NUMBER(7,2),			- 월급
+	COMM NUMBER(7,2),
+	DEPTNO NUMBER(2)
+);
+
+** 시퀀스
+
+** 테이블 명세
+
+테이블명 필드명 데이터타입 기본값 필드설명 특이사항 비고
+
+1) 시퀀스 DEPT_SEQUENCE 생성
+CREATE SEQ_DEPT_SEQUENCE
+	INCREMENT BY 10
+	START WITH 10
+	MAXVALUE 90
+	MINVALUE 10 ;
+	
+2) 만든 시퀀스 확인
+ SELECT * FROM USER_SEQUENCES;
+
+3) DEPT를 복사한 테이블 DEPT_SEQUENCE 생성
+ CREATE TABLE DEPT_SEQUENCE AS SELECT * FROM DEPT;
+
+4) 생성한 DEPT_SEQUENCE를 DEPTNO를 기준으로 확인
+SELECT * FROM DEPT_SEQUENCE ORDER BY DEPTNO;
+
+5) 만든 테이블에 SEQ_DEPT_SEQUENCE를 이용하여 값 입력하기
+ INSERT INTO DEPT_SEQUENCE (DEPTNO, DNAME, LOC) VALUES(SEQ_DEPT_SEQUENCE.NEXTVAL, 'DATABASE', 'SEOUL');
+ 
+ 6) 입력한 값 확인
+ SELECT * FROM DEPT_SEQUENCE ORDER BY DEPTNO;
+
+7) 수정하기
+	ALTER SEQ_DEPT_SEQUENCE
+	INCREMENT BY 3
+	MAXVALUE 99
+	MAXVALUE 99
+	CYCLE;
+ 
+ 
+ 제약조건
+ CREATE TABLE DEPT_SUB (
+	SUBNO NUMBER(2),
+	SNAME VARCHAR(40),
+	DEPTNO NUMBER(2) CONSTRAINT FK_DS_DEPTNO REFERENCES DEPT(DEPTNO) // DEPT의 DEPTNO를 부모로 삼는 외래키 생성
+);
+ 
+
+** 오라클 삭제하기
+
+시작버튼 - 서비스 - 오라클 관련 프로그램 전부 중지
+E / app / administrator / product / 11.2.0/ dbhome / deinstall.bat 관리자권한으로 실행
+레지스트리 제거 - 윈도우 시작버튼 클릭 - 실행 - regedit 엔터를 눌러 레지스트리 편집기를 켠다.
+아래 경로에 들어가 보면 Oracle 관련 디렉토리들이 몇개 보이는데 모두 삭제하면 삭제가 완료된다.
+
+	HKEY_LOCAL_MACHINE\SOFTWARE\ORACLE
+	HKEY_LOCAL_MACHINE\SYSTEM\ORACLE
+	HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services
+	HKEY_LOCAL_MACHINE\SYSTEM\ControlSet002\Services
+	HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services

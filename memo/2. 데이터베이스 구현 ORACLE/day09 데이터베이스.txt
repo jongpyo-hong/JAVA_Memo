@@ -1,0 +1,125 @@
+데이터 베이스 구현
+0. 평가일 안내 3/27, 3,4교시
+
+1. 오라클 , dbweaver 설치
+
+
+- 기본값 -> 유니코드
+
+2. 설치 완료 보고서
+_aA123456 = 비밀번호
+
+- 설치후 확인 :
+데이터베이스 접속 : cmd -> sqlplus system/_aA123456
+
+사용자 변경 : ALTER USER scott IDENTIFIED BY tiger ACCOUNT UNLOCK;
+-> 끝에 ; (세미콜론을 입력해야 넘어간다)
+
+접속 : CONN scott/tiger;
+
+- 스콧계정 연결
+scott
+tiger
+
+
+3. 사용자 권한, 롤 관리
+사용자 = 스키마(데이터베이스)
+			- 객체(테이블)
+
+스키마(데이터베이스) - 엑셀 파일 하나
+객체(테이블) - 엑셀 - 시트
+
+SQL(Structured Query Language)
+
+사용자 계정 생성은 권한을 가지고 있는 관리자만 생성가능
+						(system)
+
+
+* CREATE 만들기 : CREATE USER 사용자명
+					   IDENTIFIED BY 비밀번호;
+					   
+CONN 사용자명/비밀번호;
+- CREATE 생성 : CREATE USER ORCLSTUDY IDENTIFIED BY 비밀번호;
+- USER : 계정
+- SESSION : 접속여부
+- TABLE : 객체
+
+
+
+* ALTER 변경 : ALTER ALTER USER 사용자명 IDENTIFIED BY 비밀번호;
+
+
+
+* DROP 삭제 : DROP USER 사용자명;
+
+	DROP USER 사용자명 CASCADE;
+		- 스키마에 포함된 객체(테이블) 데이터도 함께 삭제
+		- DROP USER ORCLSTUDY CASCADE;
+
+
+
+*권한 부여 - GRANT 
+- GRANT CREATE SESSION TO ORCLSTUDY;
+
+
+	*시스템 권한 - 사용자 추가, 테이블 추가, 뷰 추가...., 접속 권한...
+		GRANT 권한 명, ... TO 사용자계정;
+			[WITH ADMIN OPTION];
+			
+			- WITH ADMIN OPTION - 사용자가 가지고 있는 권한을 다른 사용자에게
+											 부여할 수 있는 옵션 (관리자를 만들때)
+		
+		CREATE SESSION : 연결 생성 권한
+		
+		CREATE VIEW
+		CREATE SEQUENCE
+		CREATE SYNONYM
+		CREATE ROLE
+	
+		CREATE SESSION, CREATE TABLE, CREATE SEQUENCE, CREATE VIEW....
+		-> ROLE 
+		
+	
+	
+	*객체 권한(TABLE) - 테이블에서 데이터 추가, 수정, 삭제, 조회 권한
+	
+		*GRANT 권한명, .... ON 스키마명.객체명(테이블명) TO 사용자명;
+	
+	ROLE
+		RESOURCE
+		CONNECT
+		
+	ROLE 삭제
+	DROP ROLE ROLE이름;
+	
+	
+권한 취소 - REVOKE
+	시스템 권한
+		REVOKE 시스템권한, ... FROM 사용자 계정;
+		
+	
+	객체 권한
+		REVOKE 객체권한, ...ON 스키마명(계정).객체명(테이블명) FROM 사용자계정;
+
+
+데이터 사전 테이블 - 정보
+*DICTIONARY - DICT(동의어) : 수정X,  정보를 열람할 수 있는 테이블
+	ALL_TABLES -> 모든 테이블
+	USER_TABLES -> 현재 사용자의 테이블
+	
+4. 데이터를 추가, 수정, 삭제하는 데이터 조작어
+테이블 단위
+
+추가 - INSERT
+	INSERT INTO 테이블명 (컬럼명1, 컬럼명2, ...) VALUES ('값1', '값2', ...);
+
+수정 - UPDATE
+
+삭제 - DELETE
+
+테이블 복사
+CREATE TABLE 테이블명 AS SELECT * FROM 테이블명
+
+5. 트랜잭션 제어와 세션
+
+6. 데이터 정의어

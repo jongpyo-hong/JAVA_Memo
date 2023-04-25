@@ -1,0 +1,48 @@
+생성자
+- 함수 객체
+- 일급 객체(first class Object)
+- 함수 객체 -> 객체를 생성
+
+생성자로 객체 생성하기
+1. 생성자 함수 객체(객체를 생성해주는객체)
+new 함수 호출 -> 객체 생성
+
+
+상속
+[[Prototype]] -> __proto__ : 프로토타입 체인 - 상속관계
+
+자바스크립트의 상속 : 프로토타입 체인 연결함으로 이뤄진다.
+
+
+함수를 정의 -> 객체 생성자
+Function 생성자 객체
+	prototype
+		함수를 호출
+		.apply(thisArg, ["매개변수" ...])
+		.call(thisArg,
+		
+		.bind(this, [매개변수 ...]) : 새로운 함수
+		만들어준다.
+
+
+2. 생성자의 역할
+
+new Person()
+1) prototype 상속
+	p1.__proto__ = Person.prototype;
+	
+2) this의 범위를 p1으로 변경하고 Person() 호출
+	prototype
+		.constructor 참조 : 함수의 원형을 참조
+		-> this의 범위를 생성될 객체로 변경, 함수 호출(초기화)
+		
+3. 객체 리터럴과 생성자의 차이
+4. 메서드를 가진 객체를 생성하는 생성자
+
+프로토타입 객체
+
+
+[[Prototype]] -> 프로토타입 체인(__proto__)
+
+
+prototype -> 프로토타입 객체

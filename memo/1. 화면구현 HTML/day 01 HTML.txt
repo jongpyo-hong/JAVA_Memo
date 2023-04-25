@@ -1,0 +1,102 @@
+HTML
+
+1) 태그 구성
+<태그명>....</태그명>
+시작태그    끝나는 태그
+
+내용이 없는 단일 태그
+<태그명 />
+<태그명>
+- meta
+- br : <br />, <br>
+- img: <img />, <img>
+
+
+2) <!DOCTYPE html> : HTML5 버전
+
+3)
+<html>
+    <head>....</head>
+	- 사이트의 정보 - meta
+	- 사이트의 자원들(CSS, SCRIPT)
+	- 보이지 않는 영역 정의
+    <body>....</body>
+	- 실제 출력되는 영역
+	
+</html>
+
+요소(Element) == 태그
+
+4. HTML 속성(attributes)
+    태그에 추가되는 추가적인 정보
+	명칭 = 값
+
+    특정 기능과 연관된 정보
+
+    a : 링크 태그 - 링크 이동
+	href=주소
+
+    img : 이미지 출력
+	src="이미지 경로"
+
+HTML 문서
+- 문서와 관련된 태그
+
+1. 헤더 태그 - 제목
+h1~6
+h1 - 주제목
+h2~6 - 부제목 
+*h1~6태그를 스타일 시트로 사용해서는 안된다
+
+문단 태그 = p (Paragraph)
+
+b -> bold : 두껍게
+em : 강조된 텍스트 정의
+i : 기울임 꼴 텍스트 정의
+small : 더 작은 텍스트 정의
+strong : 중요한 텍스트 정의
+sub : 아래 첨자 텍스트 정의
+sup : 윗 첨자 텍스트 정의
+del - strike : 지운 텍스트 정의
+
+u -> underline : 밑줄
+
+HTML 주석 - 설명
+<!-- 설명 --> : 브라우저가 해석 X -> 출력 X
+
+링크 태그 - a
+
+*중요 a
+    - href : 주소
+    - target="웹페이지가 출력될 창(Window)"
+	- _self : 현재 이용하고 있는 창(현재페이지 - 기본값)
+	- _blank : 새창으로 페이지가 이동
+	- _parent : 부모창으로 페이지가 이동
+		(자식창 -> 부모창)
+	- _top : 가장 상위 창으로 페이지가 이동
+	- iframe의 이름(name)
+
+br : 줄개행
+<br>
+
+iframe : 문서 안에 포함되는 브라우저
+    - src : 조회할 주소
+    - width : 넓이
+    - height : 높이
+
+경로
+    절대 경로
+
+    상대 경로
+	- 기준 경로
+	- C:\Users\Administrator\Desktop\홍종표_\1. 화면구현\HTML\
+	- C:\Users\Administrator\Desktop\홍종표_\1. 화면구현\HTML\images\logo.png
+
+	- C:\Users\Administrator\Desktop\홍종표_\1. 화면구현\HTML\logo.png
+
+	-C:\Users\Administrator\Desktop\홍종표_\1. 화면구현\HTML\ex08.html
+
+	cd -> Change Directory
+
+	[..] -> 바로 위 경로
+	cd .. -> 바로 위 경로 이동

@@ -1,0 +1,310 @@
+객체 종류
+
+사용자 테이블
+
+데이터 사전 테이블
+DICTIONARY 테이블
+		->동의어 : DICT
+		
+SELECT * FROM DICT;
+
+1. 데이터 사전
+ALL.XXX
+	: 모든 사용자의 정보
+	
+	ALL_TABLES : 모든 사용자의 테이블
+		- OWNER
+	
+USER.XXX
+	: 현재 사용자의 정보
+	
+	USER_TABLES : 현재 사용자가 소유한 테이블
+	
+DBA_XXX
+	: system, sys 계정만 조회 가능
+
+2. 인덱스(INDEX)
+	- 목차
+	TABLE FULL Scan -> 전체 데이터 조회
+	Index Scan -> 인덱스를 타고 조회
+
+	정보
+		USER_INDEXES : 인덱스 정보 확인
+		USER_IND_COLUMNS : 인덱스가 적용된 컬럼 정보까지 포함해서 확인
+		
+		컬럼 데이터 위치, 정렬 방향 -> 이진트리방식으로 인덱스 구성
+
+	생성
+	CREATE INDEX 인덱스이름 ON 테이블명 (컬럼이름1 [ASC | DESC], 컬럼명 
+													  컬럼이름2 [ASC | DESC], 컬럼명
+													  ....);
+	
+	ASC : 오름차순 정렬 (기본값)
+	DESC : 내림차순 정렬
+	
+	EX) 직원명, 급여
+		ENAME, SAL
+	
+	
+	삭제
+	DROP INDEX 인덱스명;
+	
+	선택사항이 낮은 값일 수록 인덱스가 유리
+	
+	남,여 -> 50% - 굳이 인덱스를 사용하지 않아도됨
+	
+	검색이 많이 되는 항목, 정렬이 필요한 항목
+	
+	
+3. 뷰(View) = DDL
+	- 가상의 테이블
+	- 복잡한 SQL의 데이터 조회의 편의성
+	- 보안성
+
+
+뷰 생성
+CREATE VIEW 뷰이름 AS SELECT * FROM WHERE 조회할 기존의 테이블 컬럼명
+
+
+뷰 수정
+CREATE OR REPLACE VIEW 뷰이름 AS SELECT문 ;
+
+
+뷰 삭제
+DROP VIEW 뷰이름;
+
+
+뷰 정보
+ALL_VIEWS
+USER_VIEWS
+
+SELECT .... FROM (SELECT ....문의 결과 -> 인라인뷰) 별칭
+AS(Alias) 명칭 : 
+	- 테이블, 컬럼
+
+- 오라클에서는 테이블 별칭 앞에 AS 사용 불가
+- MySQL에서는 테이블 별칭 앞에 AS 사용 가능 
+
+
+4. ROWNUM
+	-> 행 번호
+	-> 가상의 뷰(인라인 뷰)
+	-> 조회된 3개 행만 가져오기
+		ROWNUM <= 3
+	-> 이상 조건, 범위 조회 -> 인라인 뷰를 통해서 한다
+	참고)
+	MySQL
+	SELECT ... FROM 테이블 LIMIT 시작지점, 추출 갯수;
+	LIMIT 0, 3
+	LIMIT 3
+	LIMIT 2,5 -> 3번째행부터 5번째행까지
+	
+5. 인라인뷰(서브쿼리, WITH절)
+
+6. 시퀀스(Sequence)
+			증감번호
+	
+	DEPT
+	
+	시퀀스 생성
+	CREATE SEQUENCE 시퀀스명;
+		- 1부터 시작하고 1씩증가 무한대
+		- NOCYCEL, CACHE 20
+	
+	시퀀스 세부조정
+	CREATE SEQUENCE 시퀀스명
+		INCREMENT BY 수치
+		START WITH 시작값
+		MAXVALUE 최대값
+		MINVALUE 최소값
+		CYCLE -> 최대값에 도달 -> 최소값
+		CACHE 수치
+		NOCACHE(기본값) -> 매번 수치 증가 생성
+		
+	사용방법
+		시퀀스 객체명.속성명
+			.CURRVAL : 현재 값
+					- 현재값만 반환
+			.NEXTVAL : 다음 값
+					- 현재값을 반환, 번호를 증감
+	
+		
+	시퀀스 변경
+	ALTER SEQUENCE
+	
+	시퀀스 삭제
+	DROP SEQUENCE
+	
+	
+	참고)
+		MySQL
+			AUTO_INCREMENT
+			
+	정보 
+		ALL_SEQUENCES
+		USER_SEQUENCES
+		
+	DUAL -> SYS의 가상의 테이블명
+			-> SELECT와 함께 자주 쓰인다
+			-> 값의 확인, 연산
+			
+	참고)
+		MySQL - DUAL을 생략 가능(FROM DUAL)
+
+
+7. 동의어 (SYNONYM)
+DICTIONARY -> DICT
+
+생성
+CREATE SYNONYM 동의어명 FOR 스키마명(계정명).객체명(테이블명);
+
+- CREATE SYNONYM - 입력한 사용자만 사용가능
+* CREATE PUBLIC SYNONYM - 모든 사용자가 사용가능
+
+삭제
+DROP SYNONYM 동의어명;
+
+
+제약조건
+
+키 (KEY) - 컬럼들을 대표한다
+
+아이디	회원명 	이메일	전화번호	주민번호	주소
+user01	사용자01 ....			....			....			....
+user02	사용자02 ....			....			....			....
+user03	사용자03 ....			....			....			....
+
+
+주문정보
+주문상품		주문수량		배송주소		회원명
+상품1				3				주소		사용자04
+상품2				3				주소		사용자02
+상품3				3				주소		사용자03
+
+
+후보키 - 테이블의 행을 대표할 수 있는 컬럼
+		 - 유일하게 구분될 수 있는 값을 가질 수 있는 컬럼
+		 - 컬럼 + 컬럼...
+		 
+		 아이디
+		 전화번호
+		 이메일
+		 주민번호
+		 아이디 + 회원명 + 주소
+
+기본키(PRIMARY KEY) - 후보키에서 선정된 키
+
+대리키 - 기본키로 정하기 어려운 경우 -> 증감번호와 같은 대리할 수 있는 키
+
+왜래키(FOREIGN KEY) - 다른 테이블과 관계를 맺고 있는 키
+
+boardDatas
+	idManager - managers의 id참조
+	
+managers
+	id 관리자명
+
+
+오라클 - 관계형(테이블간의 관계) 데이터베이스
+	관계 - 테이블간의 관계
+
+데이터 무결성
+1) 영역 무결성 제약조건(도메인 무결성)
+	- 동일한 자료형 값만 허용
+	- 자료형 (NUMBER, VARCHAR2(), DATE)
+	
+2) 객체 무결성 제약조건
+	- 기본키(PRIMARY KEY)
+		- 유일한 값 + NULL 불가
+		- (UNIQUE + NOT NULL)
+
+3) 참조 무결성 제약조건
+	- 외래키(FOREIGN KEY)
+	
+CREATE TABLE 테이블명 (
+	컬럼명 자료형 CONSTRAINT 제약조건명 [제약조건]
+);
+
+제약조건 변경
+ALTER TABLE 테이블명 MODIFY 컬럼명 [자료형] CONSTRAINT 제약조건명 [제약조건]
+
+제약조건 삭제
+ALTER TABLE 테이블명 DROP CONTRAINT 제약조건명;
+
+제약조건 이름변경
+ALTER TABLE 테이블명 RENAME CONTRAINT 기존명칭 TO 새로운 명칭;
+
+
+정보 확인 (SELECT * FROM)
+ALL_CONSTRAINTS
+USER_CONSTRAINTS
+
+제약조건이 적용된 컬럼 정보
+ALL_CONS_COLUMNS
+USER_CONS_COLUMNS
+
+제약조건
+
+1. NOT NULL
+	- NULL을 허용하지 않는다 : 값이 반드시 필요하다*(필수항목체크)
+	- 값을 지정하지 않음
+	
+EX) 제약조건이 있는 테이블 생성 
+	CREATE TABLE TABLE_NOTNULL (
+		userId VARCHAR2(30) CONSTRAINT NN_TNN_USERID NOT NULL,
+		userPw VARCHAR2(65) CONSTRAINT NN_TNN_USERPW NOT NULL,
+		userNm VARCHAR2(45)
+	);
+
+EX2) 제약조건이 있는 테이블에 정보 입력
+	INSERT INTO TABLE_NOTNULL (userId,userPw, userNm) VALUES ('user01',123456, '사용자01');
+	
+	NULL - 값이 없다 (연산불가)
+	연산은 반드시 값이 있어야 가능하다
+	
+	오라클 : NULL == 빈값 ("") 동일하게 NULL이다
+	MySQL : 빈값("")이 값의 일종이다
+
+2. UNIQUE
+	- 값의 중복을 허용하지 않는다
+	- NULL값은 허용한다
+	
+EX) UNIQUE 제약조건이 있는 테이블 생성	
+	CREATE TABLE TABLE_UNIQUE (
+		userId VARCHAR2(30) CONSTRAINT UQ_TU_USERID UNIQUE,
+		userPw VARCHAR2(65) CONSTRAINT UQ_TU_USERPW NOT NULL,
+		userNm VARCHAR2(40) CONSTRAINT UQ_TU_USERNM NOT NULL
+	);
+
+EX2) UNIQUE 제약조건이 있는 테이블 정보 입력	
+	INSERT INTO TABLE_UNIQUE VALUES ('userId', '123456', '사용자01');
+	INSERT INTO TABLE_UNIQUE (userPw, userNm) VALUES ('123456','사용자01'); - id에 null값 입력
+	
+	
+	CONSTRAINT_TYPE
+							- C : 일반 제약조건 (NOT NULL, CHECK)
+							- U : UNIQUE
+							- P : 기본키 (PRIMARY KEY)
+							- R : 외래키 (FOREIGN KEY)
+							
+	컬럼1, 컬럼2 -> 조합결과 UNIQUE
+							
+3. PRIMARY KEY
+	UNIQUE + NOTNULL + 1개만 정의
+	
+	컬럼1 + 컬럼2 -> 조합결과 PRIMARY KEY
+	
+EX) CREATE TABLE TABLE_PK (
+		userId VARCHAR2(30) CONSTRAINT PK_TP PRIMARY KEY, -- 어차피 하나라 입력안함
+		userPw VARCHAR2(65) CONSTRAINT NN_TP_USERPW NOT NULL,
+		userNm VARCHAR2(40) CONSTRAINT NN_TP_USERNM NOT NULL
+	);
+	
+EX2) PRIMARY KEY 제약조건이 있는 테이블 정보 입력 
+	INSERT INTO TABLE_PK VALUES ('user01', 123456, '사용자01');
+	
+
+4. FOREIGN KEY
+
+
+5. CHECK

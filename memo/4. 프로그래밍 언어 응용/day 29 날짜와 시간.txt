@@ -1,0 +1,83 @@
+날짜와 시간
+
+1. Date(JDK 1.0)
+
+Locale : 지역화
+(java.util.Locale)
+
+2. Calendar(JDK 1.1)
+	- 직접 생성자를 통해 객체를 생성할 수 없다
+	- Calendar.getInstance()로 생성(static)
+		- 지역화 정보에 따라서 달력 객체를 달리 생성한다
+			GregorianCalendar
+			Buddhist Calendar
+			
+	- 조회
+			int get(Calendar.상수)
+			
+	날짜, 시간의 가감
+		- void add(int field, int amount) ex) add(MONTH, +1)
+				가 : + (default)
+				감 : -
+				
+	- 변경			
+		- void set(int field, int amount)	
+		- void set(int year, int amount...)
+				
+		- void roll(int field, int amount)
+----------------------------------------------------------------------------------------------
+
+java.time 패키지
+- Temporal
+- TemporalAccessor
+- TemporalAdjuster
+
+
+1. java.time : 핵심 클래스
+2. java.time.format : 형식화 관련 클래스(DateTimeFormatter)
+3. java.time.temporal
+	- TemporalUnit : 날짜 시간 단위
+			- Enum ChronoUnit
+	- TemporalField : 날짜 시간 항목
+			- Enum ChronoField 
+			
+4. java.time.zone
+	- 시간대와 관련
+-----------------------------------------------------------------------------------------------
+
+
+java.time 패키지의 핵심 클래스
+1. LocalDate : 날짜 관련 클래스
+
+
+2. LocalTime : 시간 관련 클래스
+
+
+3. LocalDateTime
+4. ZonedDateTime
+5. OffsetDateTime
+6. Period와 Duration
+
+
+객체 생성하기 
+- now() : 현재 날짜
+- of() : 입력한 날짜
+
+Temporal과 TemporalAmount
+
+TemporalUnit과 TemporalField
+- ChronoUnit : 날짜, 시간 단위
+- ChronoField : 날짜, 시간 필드
+
+
+특정 필드의 값 가져오기
+- get(), getXXX()
+
+특정필드의 값 변경하기
+- with() : 날짜와 시간 변경하기
+
+- plus() : 날짜, 시간 추가
+
+- minus() : 날짜, 시간 감소
+
+날짜와 시간의 비교

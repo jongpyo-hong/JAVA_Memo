@@ -1,0 +1,44 @@
+자바에서 웹을 구현하는 기술
+
+*서블릿
+
+서블릿 기초
+1. 서블릿(Servlet)의 개요
+	HttpServlet 클래스 (추상클래스)
+	
+	
+2. 서블릿(Servlet) 클래스 작성하기
+	javaee 8
+	
+	javax.servlet-api : 서블릿 API (maven repository) - Java Servlet API
+	javax.servlet.jsp-api : JSP API (maven repository) - JavaServer Pages(TM) API
+	
+	HttpServlet 추상 클래스 상속
+	
+	jakarta ee 10
+	
+3. web.xml 파일에 서블릿(Servlet) 등록하기
+<?xml version="1.0" encoding=""..?>
+
+/src/main/webapp/WEB-INF
+								- web.xml (/tomcat/webapp/WEB-INF/web(메모장으로열기))
+									
+
+4. 웹 브라우저로부터 데이터 입력 받기
+5. 필터, 래퍼클래스
+
+
+API(Application Programming Interface)
+
+JDBC API (Java DataBase Connectivity API) ex) oracle , my-sql, ms-sql...
+
+SLF4J API
+Logback Classic
+
+
+
+HttpServletRequest - 요청 객체
+
+HttpServletResponse - 응답 객체
+
+/hello -> helloServlet -> servlets.HelloServlet -> doGet

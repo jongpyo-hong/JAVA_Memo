@@ -1,0 +1,33 @@
+함수
+	1) 단일행 함수
+		- 하나의 행에 있는값
+		- 문자
+			- CONCAT
+			- ||
+			- SUBSTR
+			- REPLACE
+		- 숫자
+			- TO_NUMBER
+			- ROUND
+			- CEIL
+			- FLOOR
+			
+		- 날짜
+			- TO_DATE
+		- 형식
+			-TO_CHAR -> 숫자, 날짜 형식화
+	
+	2) 다중행 함수
+		- 여러행을 사용해서 값을 도출하는 함수
+		- 통계 관련
+			SUM, AVG, MAX, MIN, COUNT
+			SUM( [ALL | DISTINCT] 컬럼 )
+			
+			- GROUP BY 컬럼, 컬럼...
+				- 공통의 값으로 묶어 주는 역할
+				- 부서별 통계, 부서별 + 직책별 통계
+				- 공통값의 갯수가 행의 갯수
+				- 출력되는 컬럼은 GROUP BY에 명시된 컬럼명
+				
+			- 집계함수의 조건식
+				(WHERE - X HAVING - O)

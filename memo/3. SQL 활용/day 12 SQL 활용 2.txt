@@ -1,0 +1,129 @@
+1. 문법
+SELECT ... FROM ... WHERE 조건식;
+
+2. 여러 개 조건식을 사용하는 AND, OR 연산자
+3. 연산자 종류와 활용 방법
+
+1) 비교 연산자
+	>, <, >=, <=
+	
+	= (같다)
+	
+	다르다
+	- !=
+	- <>
+	- ^=
+	
+2) 논리 연산자
+	AND : 조건 둘 다 참 
+	EX) SELECT * FROM EMP WHERE SAL >= 800 AND SAL<=3000;
+	-> 급여가 800이상 3000이하 선택
+	
+	OR : 조건 둘중 하나만 참 
+	EX) SELECT * FROM EMP WHERE JOB = 'SALESMAN' OR JOB = 'MANAGER';
+	-> 직책이 'SALESMAN' 이거나 'MANAGER' 이면 선택
+	
+	NOT : 조건을 반대로
+	EX) SELECT * FROM EMP WHERE NOT (JOB = 'SALESMAN' OR JOB = 'MANAGER');
+	-> 직책이 'SALESMAN', 'MANAGER'을 제외한 모두 선택
+
+3) IN 연산자
+	
+	EX) SELECT * FROM EMP WHERE JOB IN('SALESMAN', 'MANAGER') AND SAL >= 2500;
+	-> 직책이 SALESMAN, MANAGER 면서 급여가 2500 이상 선택
+
+4) BETWEEN A AND B
+A이상 ~ B이하
+	
+	EX) SELECT * FROM EMP WHERE SAL BETWEEN 800 AND 2000;
+		-> 급여가 800이상 3000이하 선택
+	
+	EX) SELECT * FROM EMP WHERE SAL NOT BETWEEN 800 AND 2000;
+		-> 급여가 800이하, 3000이상 선택
+		
+	EX) SELECT * FROM EMP WHERE HIREDATE BETWEEN '1981/01/01' AND '1981/12/31';
+		-> 입사일이 1981 01 01 부터 1981 12 31인 직원선택
+		
+5) LIKE 연산자
+	- 와일드카드
+	- (%) 패턴
+	- ( _ 언더바) = 한칸띄움(글자 한칸) 
+	
+	(%, _ ) -> 기능이 아닌 문자로 사용할 때
+	ESCAPE 
+	
+	컬럼명 LIKE '단어' -> 일치하는 조건
+	-> EX) SELECT * FROM EMP WHERE ENAME LIKE 'JONES'; // ENAME = 'JONES'
+	
+	컬럼명 LIKE '%단어' -> "단어"로 끝나는 패턴 
+	-> EX) SELECT * FROM EMP WHERE ENAME LIKE '%N'; // ENAME 중 N으로 끝나는 패턴
+	
+	-> EX2) SELECT * FROM EMP WHERE ENAME LIKE '__L%'; // ENAME에 두칸 띄운다음 L로 시작하는 패턴
+	
+	컬럼명 LIKE '단어%' -> "단어"로 시작하는 패턴
+	-> EX) SELECT * FROM EMP WHERE JOB LIKE 'SA%';  // JOB 중 SA로 시작하는 패턴
+	
+	컬럼명 LIKE '%단어%' -> "단어"가 포함된 패턴 
+	-> EX) SELECT * FROM EMP WHERE ENAME LIKE '%L%'; // ENAME에 'L'이 포함
+	
+	ESCAPE
+	-> EX) SELECT * FROM EMP_FK WHERE ENAME LIKE '%!_CD' ESCAPE '!'; - ESCAPE 뒤에오는 문자는 특수문자도 문자로 표기
+	
+	
+6) IS NULL
+	NULL - 값이 없음
+	-> 비교 연산이 안된다 -> 컬럼명 = NULL (X)
+	
+	-> NULL 인지 체크하는 연산자
+	
+	-> IS NOT NULL : NULL이 아닌 항목선택
+	
+		EX) SELECT * FROM EMP WHERE COMM IS NULL; // COMMITION이 NULL인 직원 선택
+		EX) SELECT * FROM EMP WHERE COMM IS NOT NULL; // COMMITON이 NULL값이 아닌 직원 선택
+		
+		
+4. 집합 연산자
+
+집합의 가장 중요한 특징
+
+A 집합 = 1,2,3,4,5,6
+B 집합 = 4,5,6,7,8
+
+A와 B의 합집합 = 1,2,3,4,5,6,7,8
+-> 중복을 허용하지 않는다	
+
+교집합
+	INTERSECT 
+	IN
+	
+	EX) SELECT * FROM EMP WHERE SAL <= 2500
+		 INTERSECT
+		 SELECT * FROM EMP WHERE SAL >= 2000;
+		 
+	EX) SELECT * FROM EMP WHERE SAL <= 2500
+		 AND SAL IN (SELECT SAL FROM EMP WHERE SAL >= 2000);
+	
+합집합
+	UNION - 중복 X
+	
+	UNION ALL - 중복 O
+	
+	EX) SELECT * FROM EMP WHERE SAL <= 2500
+		 UNION
+		 SELECT * FROM EMP WHERE SAL >= 2000; - 중복된 값은 한번만 출력
+		 
+	EX) SELECT * FROM EMP WHERE SAL <= 2500
+		 UNION ALL
+		 SELECT * FROM EMP WHERE SAL >= 2000; - 중복된 값이 모두 출력된다
+	
+		
+차집합
+	MINUS
+	NOT IN
+	
+	EX) SELECT * FROM EMP WHERE SAL <= 2500
+		 MINUS
+		 SELECT * FROM EMP WHERE SAL >= 2000;
+		 
+	EX2) SELECT * FROM EMP WHERE SAL <= 2500
+		  AND SAL NOT IN (SELECT SAL FROM EMP WHERE SAL >= 2000);

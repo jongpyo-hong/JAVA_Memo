@@ -1,0 +1,46 @@
+java.lang 패키지
+
+java.lang
+String
+
+컴파일러가 기본적으로 추가
+
+1. import java.lang.*; -> 패키지명 바로 아래에 추가
+2. 상속이 명시되지 않은 클래스 -> extends Object를 자동 추가
+3. 기본생성자 public 클래스명() {}
+4. 모든 생성자의 첫번째 라인에 super() 추가
+5. 인터페이스(interface) :
+	모든 메서드 - public abstract
+	모든 변수 -> 정적 상수 (public static final)	
+	
+6. 지역 내부 클래스
+	- 지역변수 -> final
+		(지역변수의 상수화)
+
+
+Object 클래스
+1. toString() 메서드
+	public String toString() {
+        return getClass().getName() + "@" + Integer.toHexString(hashCode());
+    }
+	
+	패키지명.클래스명@인스턴스주소
+	
+	- 주로 toString() 메서드를 재정의
+		(멤버 변수의 값을 확인하는 용도)
+
+
+2. equals() 메서드
+	public boolean equals(Object obj) {
+        return (this == obj);
+    }
+	
+	
+	== : 주소의 비교
+
+
+3. hashCode() 메서드
+	- 기본정의 : 인스턴스의 주소 (물리적 주소X)
+
+
+String 클래스

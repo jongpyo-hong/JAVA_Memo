@@ -1,0 +1,79 @@
+1. 바이트 단위 스트림
+	입력 스트림 - InputStream
+		- 기반 스트림 : 데이터에 직접 접근하는 스트림
+					(생성자 매개변수가 대체로 byte[], File, String 파일명 ....)
+			메모리 기반
+				ByteArrayInputStream
+				
+			파일기반
+				FileInputStream
+				
+				
+		- 보조 스트림 : 다른 스트림에 추가기능을 더해주는 스트림
+					(생성자 매개변수가 InputStream)
+					
+				- FilterInputStream : 메인기능x , 데코레이터 기능
+					- BufferedInputStream : 입력스트림 + 버퍼기능(8kb)
+					- DataInputStream : 기본 자료형으로 데이터 읽기 기능
+						EOFException예외발생 - 파일끝에 도달하면 발생하는 예외
+					
+					
+				- ObjectInputStream : 객체를 읽을수 있는 기능
+
+	출력 스트림 - OutputStream
+		- 기반 스트림 
+			메모리기반
+				ByteArrayOutputStream
+			
+			파일기반
+				FileOutputStream
+		
+		- 보조 스트림 (생성자 매개변수가 OutputStream)
+				- FilterOutputStream
+					- BufferedOutputStream : 출력 스트림 + 버퍼기능(8kb)
+					- DataOutputStream : 기본 자료형으로 출력
+					
+				- ObjectOutputStream : 객체를 출력한다
+				
+	
+2. 문자 단위 스트림 (2바이트(CPC949, EUC-KR), 3바이트(UTF-8))
+	입력 스트림 - Reader
+		- 기반 스트림 : 데이터에 직접 접근하는 스트림
+			- 메모리 기반 스트림
+				- CharArrayReader
+				- StringReader
+			
+			- 파일 기반 스트림
+				- FileReader
+		
+		- 보조 스트림 : 다른 입력 스트림에 + 추가기능
+		(생성자 매개변수가 Reader)
+			- FilterReader
+				- BufferedReader
+					- String readLine() : 파일 끝에 도달하면 null값 반환
+		
+	
+	출력 스트림 - Writer
+		- 기반 스트림 : 데이터를
+			- 메모리 기반 
+				- CharArrayWriter
+				- StringWriter
+			
+			- 파일기반
+				- FileWriter
+		
+		- 보조 스트림 :  (생성자 매개변수가 Writer)		
+			- FilterWriter
+				- BufferedWriter
+				
+바이트 단위 스트림 -> 문자 단위 스트림
+InputStreamReader
+
+OutputStreamWriter
+
+표준 입출력(Standard Input / Output)
+
+System
+	InputStream in
+	PrintStream out
+	PrintStream err

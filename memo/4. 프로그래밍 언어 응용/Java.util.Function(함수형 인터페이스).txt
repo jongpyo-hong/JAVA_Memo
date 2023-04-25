@@ -1,0 +1,26 @@
+java.util.function패키지
+
+1. 함수형 인터페이스
+
+1. Supplier<R> : R get();
+	- 반환값 O, 매개변수 X 
+
+2. Consumer<T> : void accept(T t);
+	- 반환값 X, 매개변수 O
+
+3. Function<T, R> : R apply(T t); 
+	- 반환값 O, 매개변수 1개
+
+4. Predicate<T> boolean test(T t);
+	- 반환값이 boolean, 매개변수 1개
+	
+2. 매개변수가 2개인 인터페이스
+
+1. BiConsumer<T, U> : void accept(T t, U u)
+	- 매개변수가 2개, 반환값이 없다
+
+2. BiFunction<T, U, R> : R apply(T t, U u)
+	- 매개변수가 2개, 반환값이 있다
+
+3. BiPredicate<T, U> boolean text (T t, U u)
+	- 매개변수가 2개 반환값이 boolean

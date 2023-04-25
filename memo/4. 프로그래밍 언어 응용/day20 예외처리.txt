@@ -1,0 +1,87 @@
+예외처리
+1. 오류와 예외
+
+오류(Error)
+	- 서버, 물리적 환경상의 오류
+	- 프로그래머가 통제 불가한 오류
+
+예외(Exception)
+	- 코드 상에서 발생하는 오류(버그)
+	- 프로그래머가 통제 할 수 있는 오류
+
+2. 예외 클래스의 종류
+- Throwable
+		- Error
+	
+		- Exception
+			1) IOException
+			java.io
+				ex) FileInputStream : FileNotFoundException
+				
+				- 예외가 발생하든 안하든 예외 처리를 하지 않으면 컴파일 X
+				- 컴파일시에 체크되는 예외
+				- 엄격한 예외
+				- 형식이 매우 중요
+				- 예외를 전가, 반드시 전가시키는 예외를 명시 해야한다(throws)
+		
+			2) RuntimeException : Runtime - 실행
+				ex) ArithmethicException
+					- 숫자를 0으로 나누면
+					- 예외가 실행중에 체크되는 예외
+					- 실행이 되려면 컴파일이 필요하므로 컴파일은 된다
+					- 유연한 예외
+					- 예외 전가시, 형식이 중요하지 않다(throws를 명시하지 않아도 된다)
+
+3. 예외 처리하기
+1) try-catch-finally문
+	- 서비스를 중단시키지 않기 위해 사용
+
+try {
+	// 예외가 발생할지도 모르는 코드
+	
+} catch(발생할 예외 객체) {
+	// 예외가 발생했을때 처리할 코드
+	
+} finally {
+	// 예외가 발생하든 안하든 항상 수행되는 코드
+}
+
+
+리소스 : 서버의 자원 (메모리)
+	-> 파일 읽기, 데이터 베이스 데이터를 조회 -> 리소스
+	
+throw 예외객체
+
+FileNotFoundException e = new FileNotFoundException();
+IOException = new FileNotFoundException();
+Exception = new FileNotFoundException();
+
+
+Throwable 메서드
+-> 오류의 정보를 알기위한 메서드
+	- getMessage()
+	- printStackTrace()
+
+2) try-with-resources문
+
+try (자원 해제가 필요한 리소스) {
+	// 예외가 발생할지도 모르는 코드
+} catch(발생할 예외 객체) {
+
+} finally {
+
+}
+
+- AutoClosable 인터페이스의 구현체인 경우만 가능
+	- close()를 자동 호출
+
+
+4. 예외 처리 미루기
+- 예외 처리를 하지않고 호출하는 메서드에서 처리를 전가
+
+5. 다중 예외 처리
+
+6. 사용자 정의 예외
+Exception 클래스를 상속 받으면 사용자 정의 예외가 된다.
+
+throw 예외객체;

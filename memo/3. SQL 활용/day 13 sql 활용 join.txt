@@ -1,0 +1,41 @@
+여러 테이블을 하나의 테이블처럼 사용하는 조인
+EMP, DEPT 부서
+
+SELECT * FROM 테이블명, 테이블명....
+
+1. 등가 조인(동등조건)
+	- 공통 값을 가지고 조인
+	- 내부 조인(INNER JOIN)
+	- 교집합
+	- 공통값이 있는 항목만 조회
+	
+	EX) SELECT E.*, D.DNAME FROM EMP E, DEPT D
+		 WHERE E.DEPTNO = D.DEPTNO; -- 동등 JOIN, 내부 JOIN
+		 
+2. 비등가 조인
+	- 공통 값이 아니고, 비교를 통해서 암묵적으로 조인
+	- 연결점X, 비교를 통해서 조인
+	
+	EX) SELECT E.*, S.GRADE FROM EMP E, SALGRADE S
+		 WHERE E.SAL BETWEEN S.LOSAL AND S.HISAL;
+		 
+3. 자체 조인
+	동일 테이블 내에서 조인
+	
+	EX) SELECT 
+			E1.EMPNO 직원번호,
+			E1.ENAME 직원명,
+			E2.MGR 관리자번호,
+			E2.ENAME 관리자명
+		FROM EMP E1, EMP E2
+		WHERE E1.MGR = E2.EMPNO;
+		
+4. 외부 조인(OUTER JOIN)
+	+a(추가 데이터)
+부서 정보를 조회 + 서브 정보가 있으면 추가로 조회
+(부서는 전체O, 서브정보는 있으면O, 없으면 NULL)
+
+추가 정보를 제공하는 테이블(+)
+
+EX) SELECT * FROM DEPT D, DEPT_SUB S
+	 WHERE D.DEPTNO = S.DEPTNO(+);

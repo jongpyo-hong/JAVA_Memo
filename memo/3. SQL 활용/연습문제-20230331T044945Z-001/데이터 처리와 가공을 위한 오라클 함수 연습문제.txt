@@ -1,0 +1,11 @@
+Q1) EMP 테이블에서 사원이름을 대문자, 소문자, 첫글자만 대문자로 출력하기
+A : SELECT ENAME, UPPER(ENAME), LOWER(ENAME), INITCAP(ENAME) FROM EMP;
+
+Q2) EMP 테이블의 사원들 이름은 각 몇바이트인지 출력하기
+A : SELECT ENAME, LENGTHB(ENAME) FROM EMP;
+
+Q2-2) EMP 테이블 내의 직책이름이 6글자 이상인 데이터 출력하기
+A : SELECT JOB FROM EMP WHERE LENGTH(JOB) >= 6;
+
+Q3) EMP 테이블의 모든 사원 이름을 세번째 글자부터 끝까지 출력하기
+A : SELECT ENAME, SUBSTR(ENAME, 3) FROM EMP;

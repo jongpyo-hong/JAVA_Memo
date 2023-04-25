@@ -1,0 +1,318 @@
+제약 조건
+무결성
+
+키(KEY)
+
+EX)엑셀파일
+
+회원정보
+회원번호		아이디	회원명 	이메일	전화번호	주민번호	주소
+	 2			user01	사용자01 ....			....			....			....
+				user02	사용자02 ....			....			....			....
+				user03	사용자03 ....			....			....			....
+
+
+주문정보
+주문상품		주문수량		배송주소		회원명		회원번호
+상품1				3				주소		사용자04			 2
+상품2				3				주소		사용자02			 3
+상품3				3				주소		사용자03			 4
+
+
+후보키 - 테이블의 행을 대표할 수 있는 컴럼
+		 - 유일하게 구분될 수 있는 값을 가질 수 있는 컬럼
+		 - 컬럼 + 컬럼 ...
+		 
+		 아이디
+		 주민번호
+		 전화번호
+		 이메일
+		 아이디 + 회원명 +주소 - 묶어서도 사용 가능하다
+
+기본키 - 후보키에서 선정된키 (PRIMARY KEY)
+대리키 - 기본키로 정하기 어려운 경우 -> 증감번호와 같은 대리 할 수있는 키
+EX) 회원번호
+		 
+외래키(FOREIGN KEY) : 다른 테이블과 관계를 맺고있는 키, 
+							  외래키의 제약조건 : 부모키가 있으면 데이터를 삭제 못하게 한다
+
+
+데이터 무결성
+1) 영역 무결성 제약조건(도메인 무결성) - 문자란에 문자, 숫자란에 숫자가 들어간다.
+	- 동일한 자료형 값만 허용
+	- 자료형
+	
+2) 개체 무결성 제약조건
+	- 기본키
+		- 유일한 값 + NOT NULL
+		- UNIQUE + NOTNULL
+		
+3) 참조 무결성 제약조건
+	- 외래키(FOREIGN KEY)
+	
+테이블 생성(제약조건)
+
+CREATE TABLE 테이블명 (
+	컬럼명 자료형 CONSTRAINT 제약조건명 [제약조건]
+);
+
+ALTER TABLE 테이블명 MODIFY 컬럼명 자료형 CONSTRAINT 제약조건명 [제약조건];
+
+ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건명;
+
+ALTER TABLE 테이블명 RENAME  CONSTRAINT 기존 제약조건명 TO 새로운 제약조건명;
+
+제약조건 정보 확인하기
+ALL_CONSTRAINTS
+USER_CONSTRAINTS
+
+제약조건이 적용된 컬럼 정보
+ALL_CONS_COLUMNS
+USER_CONS_COLUMNS
+
+CONSTRAINT_TYPE
+	C : NOT NULL, CHECK
+	P : PRIMARY KEY
+	U : UNIQUE KEY
+	R : FOREIGN
+	
+	
+후보키 - 테이블의 행을 대표할 수 있는 컬럼
+		 - 유일하게 구분될 수 있는 값을 가질 수 있는 컬럼
+		 - 컬럼 + 컬럼...
+		 
+		 아이디
+		 전화번호
+		 이메일
+		 주민번호
+		 아이디 + 회원명 + 주소
+
+기본키(PRIMARY KEY) - 후보키에서 선정된 키
+
+대리키 - 기본키로 정하기 어려운 경우 -> 증감번호와 같은 대리할 수 있는 키
+
+왜래키(FOREIGN KEY) - 다른 테이블과 관계를 맺고 있는 키
+
+boardDatas
+	idManager - managers의 id참조
+	
+managers
+	id 관리자명
+
+
+오라클 - 관계형(테이블간의 관계) 데이터베이스
+	관계 - 테이블간의 관계
+
+데이터 무결성
+1) 영역 무결성 제약조건(도메인 무결성)
+	- 동일한 자료형 값만 허용
+	- 자료형 (NUMBER, VARCHAR2(), DATE)
+	
+2) 객체 무결성 제약조건
+	- 기본키(PRIMARY KEY)
+		- 유일한 값 + NULL 불가
+		- (UNIQUE + NOT NULL)
+
+3) 참조 무결성 제약조건
+	- 외래키(FOREIGN KEY)
+	
+CREATE TABLE 테이블명 (
+	컬럼명 자료형 CONSTRAINT 제약조건명 [제약조건]
+);
+
+제약조건 변경
+ALTER TABLE 테이블명 MODIFY 컬럼명 [자료형] CONSTRAINT 제약조건명 [제약조건]
+
+제약조건 삭제
+ALTER TABLE 테이블명 DROP CONTRAINT 제약조건명;
+
+제약조건 이름변경
+ALTER TABLE 테이블명 RENAME CONTRAINT 기존명칭 TO 새로운 명칭;
+
+
+정보 확인 (SELECT * FROM)
+ALL_CONSTRAINTS
+USER_CONSTRAINTS
+
+제약조건이 적용된 컬럼 정보
+ALL_CONS_COLUMNS
+USER_CONS_COLUMNS
+
+제약조건
+
+1. NOT NULL
+	- NULL을 허용하지 않는다 : 값이 반드시 필요하다*(필수항목체크)
+	- 값을 지정하지 않음
+	
+EX) 제약조건이 있는 테이블 생성 
+	CREATE TABLE TABLE_NOTNULL (
+		userId VARCHAR2(30) CONSTRAINT NN_TNN_USERID NOT NULL,
+		userPw VARCHAR2(65) CONSTRAINT NN_TNN_USERPW NOT NULL,
+		userNm VARCHAR2(45)
+	);
+
+EX2) 제약조건이 있는 테이블에 정보 입력
+	INSERT INTO TABLE_NOTNULL (userId,userPw, userNm) VALUES ('user01',123456, '사용자01');
+	
+	NULL - 값이 없다 (연산불가)
+	연산은 반드시 값이 있어야 가능하다
+	
+	오라클 : NULL == 빈값 ("") 동일하게 NULL이다
+	MySQL : 빈값("")이 값의 일종이다
+
+2. UNIQUE
+	- 값의 중복을 허용하지 않는다
+	- NULL값은 허용한다
+	
+EX) UNIQUE 제약조건이 있는 테이블 생성	
+	CREATE TABLE TABLE_UNIQUE (
+		userId VARCHAR2(30) CONSTRAINT UQ_TU_USERID UNIQUE,
+		userPw VARCHAR2(65) CONSTRAINT UQ_TU_USERPW NOT NULL,
+		userNm VARCHAR2(40) CONSTRAINT UQ_TU_USERNM NOT NULL
+	);
+
+EX2) UNIQUE 제약조건이 있는 테이블 정보 입력	
+	INSERT INTO TABLE_UNIQUE VALUES ('userId', '123456', '사용자01');
+	INSERT INTO TABLE_UNIQUE (userPw, userNm) VALUES ('123456','사용자01'); - id에 null값 입력
+
+EX3) UNIQ + UNIQ 제약조건이 있는 테이블
+		CREATE TABLE TABLE_UNIQUE (
+		userId VARCHAR2(30),
+		userPw VARCHAR2(65),
+		userNm VARCHAR2(40),
+		CONSTRAINT UQ_UT_USERID_USERNM UNIQUE(userId, userNm)
+	);
+
+EX4) UNIQ + UNIQ 제약조건이 있는 테이블 정보입력
+	INSERT INTO TABLE_UNIQUE VALUES ('user01', 123456, '사용자01_1');
+
+
+	
+	CONSTRAINT_TYPE
+							- C : 일반 제약조건 (NOT NULL, CHECK)
+							- U : UNIQUE
+							- P : 기본키 (PRIMARY KEY)
+							- R : 외래키 (FOREIGN KEY)
+							
+	컬럼1, 컬럼2 -> 조합결과 UNIQUE
+							
+3. PRIMARY KEY
+	UNIQUE + NOTNULL + 1개만 정의
+	
+	컬럼1 + 컬럼2 -> 조합결과 PRIMARY KEY
+	
+	ALTER TALBE 테이블명 ADD CONSTRAINT 제약조건명 PRIMARY KEY(컬럼명, ...);	
+		EX) ALTER TABLE TABLE_NOTNULL ADD CONSTRAINT PK_TN PRIMARY KEY(userId);
+	
+EX) PRIMARY KEY 제약조건이 있는 테이블
+	CREATE TABLE TABLE_PK (
+		userId VARCHAR2(30) CONSTRAINT PK_TP PRIMARY KEY, -- 어차피 하나라 입력안함
+		userPw VARCHAR2(65) CONSTRAINT NN_TP_USERPW NOT NULL,
+		userNm VARCHAR2(40) CONSTRAINT NN_TP_USERNM NOT NULL
+	);
+	
+EX2) PRIMARY KEY 제약조건이 있는 테이블 정보 입력 
+	INSERT INTO TABLE_PK VALUES ('user01', 123456, '사용자01');
+	
+EX3) PRIMARY + PRIMARY KEY 제약조건이 있는 테이블
+	CREATE TABLE TABLE_PK(
+		userId VARCHAR2(30),
+		userPw VARCHAR2(65),
+		userNm VARCHAR2(40),
+		CONSTRAINT PK_TP PRIMARY KEY(userId, userNm)
+	);
+
+EX4) INSERT INTO TABLE_PK VALUES ('user01', 123456, '사용자01');
+	
+	
+	
+4. FOREIGN KEY (외래키, 참조하는 키)
+
+CREATE TABLE 테이블명 (
+	컬럼명 자료형 CONSTRAINT 제약조건명 REFERENCES 테이블명 (컬럼명)
+);
+
+	제약조건 
+		- 부모테이블 데이터가 자식 테이블 데이터와 연관 있으면 삭제불가
+	
+	삭제옵션
+		- CASCADE : 연쇄삭제, 부모테이블의 데이터가 삭제되면 -> 자식데이터도 삭제한다
+				CONSTRAINT 제약조건명 REFERENCES 테이블명 (컬럼명) ON DELETE CASCADE;
+		- SET NULL : 부모테이블의 데이터가 삭제가 되면 -> 자식데이터의 외래키가 NULL값이 된다
+				CONSTRAINT 제약조건명 REFERENCES 테이블명 (컬럼명) ON DELETE SET NULL;
+		
+EX) EMP, DEPT의 FOREIGN KEY 
+	
+	부모 테이블
+	CREATE TABLE DEPT_FK (
+		DEPTNO NUMBER(2) CONSTRAINT PK_DEPT_FK PRIMARY KEY,
+		DNAME VARCHAR2(14),
+		LOC VARCHAR2(13)
+	);
+	
+	자식테이블
+	CREATE TABLE EMP_FK (
+		EMPNO NUMBER(4) CONSTRAINT PK_EMP_FK PRIMARY KEY,
+		ENAME VARCHAR2(10),
+		JOB VARCHAR2(9),
+		MGR NUMBER(4),
+		HIREDATE DATE,
+		SAL NUMBER(7,2),
+		COMM NUMBER(7,2),
+		DEPTNO NUMBER(2) CONSTRAINT FK_EF_DEPTNO REFERENCES DEPT_FK (DEPTNO)
+	);
+	
+	왜래키(자식테이블)이 있는 부모테이블은 삭제불가
+	
+	* CASCADE, SETNULL로 둘 다 삭제하거나 NULL값으로 만들수 있다
+	
+	EX) 삭제옵션 부가
+	ALTER TABLE EMP_FK MODIFY DEPTNO NUMBER(2) 
+	CONSTRAINT FK_EF_DEPTNO REFERENCES DEPT_FK(DEPTNO) ON DELETE CASCADE;
+																									SET NULL;
+	
+	DELETE FROM DEPT_FK WHERE DEPTNO=20; 
+	-> CASCADE = 삭제가능 (부모테이블의 DEPTNO=20값에 해당하는 컬럼 삭제)
+		SET NULL = 부모테이블 삭제, 자식테이블 NULL
+		
+자식테이블 - 외래키가 있는 테이블 (EMP_FK)
+부모테이블 - 자식테이블이 참조 하는 기본키가 있는 테이블 (DEPT_FK)
+
+5. CHECK
+	CHECK(조건식)
+	
+		LENGTH(문자열) -> 문자의 갯수
+		LENGTHB(문자열) -> 문자의 바이트 수
+		
+		참고)
+			MySQL
+				LENGTH(문자열) -> 문자의 바이트 수
+				CHAR_LENGTH(문자열) -> 문자의 갯수
+				
+EX) CREATE TABLE TABLE_CHECK (
+		userId VARCHAR2(30) CONSTRAINT PK_TC PRIMARY KEY,
+		userPw VARCHAR2(65) CONSTRAINT CK_TC CHECK(LENGTH(userPw) >=8),
+		userNm VARCHAR2(40)
+	 );
+	 
+	 INSERT INTO TABLE_CHECK (userId, userPw, userNm) VALUES ('user01', 12345678, '사용자01');
+	 -> userPw 값이 8자리 이상이지 않으면 입력되지 않는다
+
+6. DEFAULT
+	- 기본값
+	- 값이 NULL이면 (따로 추가하지 않으면) 자동 추가되는 값
+	
+EX) CREATE TABLE TABLE_DEFAULT (
+	userId VARCHAR2(30),
+	userPw VARCHAR2(65),
+	userNm VARCHAR2(40),
+	regDt DATE DEFAULT SYSDATE //  생성시 자동으로 현재시각 입력
+);
+
+7. 제약 조건 비활성화, 활성화
+
+- 비활성화
+	ALTER TABLE 테이블명 DISABLE CONSTRAINT 제약조건명
+
+- 활성화
+	ALTER TABLE 테이블명 ENABLE CONSTRAINT 제약조건명

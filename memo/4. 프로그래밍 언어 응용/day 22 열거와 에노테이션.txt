@@ -1,0 +1,93 @@
+* 열거형
+
+1. 열거형이란?
+상수만을 위한 클래스의 일종
+1) enum 클래스는 java.lang.Enum 클래스의 하위 클래스
+	- java.lang.Enum
+		String name() : 상수명
+		int ordinal() : 상수의 위치
+		
+	- 컴파일러가 자동 추가해주는 메서드
+		.valueOf(...) : 문자열을 Enum 상수로 변환
+		.values(...) : 모든 상수를 배열로 반환
+2) 정의된 상수는 enum 클래스의 정적 상수 객체
+
+3) 모든 생성자 private - getter로 조회해야한다
+
+4) 추상 클래스 - abstract를 정의하지 않는다 (enum 클래스에 포함이 되어있다)
+
+enum 클래스명 {
+	상수, 상수, 상수 ....
+}
+
+과거 JDK -> 정적 상수
+1.8 JDK -> Enum 클래스
+
+2. 열거형 정의와 사용
+	enum {
+		상수, 상수, 상수...
+	}
+	
+	switch ~ case 
+
+3. 모든 열거형의 상위 클래스 - java.lang.Enum
+4. Enum 클래스에 정의된 메서드
+	String name() - 상수명 (BUS, SUBWAY, TRAIN, ...)
+	int ordinal() - 상수의 위치(0, 1, 2 ....) - 내부에서 사용한다(위치가 바뀔수 있기때문)
+	
+	문자열 -> enum 상수
+	Enum
+		static valueOf(...)
+		
+	각각의 Enum 클래스에 컴파일러가 자동 추가
+		valueOf : 문자열 -> Enum 상수
+		values() : 모든 상수 배열로 반환
+	
+	
+5. 열거형에 멤버 추가하기
+	- private 생성자
+	- Enum 상수는 목적이 상수, 개별 생성 X
+	- 추상 클래스 : 추상 메서드 정의 가능
+	
+6. 열거형에 추상메서드 추가하기
+
+* 에너테이션(annotation)
+
+
+
+1. 에너테이션이란?
+- 주석, 주해 : 기능X 정보 전달
+
+@interface 애너테이션 명 {
+
+}
+
+- java.lang.annotation.Annotation
+- 실 구현체(interface)는 시스템이 만들어 준다
+
+2. 표준 에너테이션
+	- JDK에 기본 탑재된 애너테이션
+	- @Override : 재정의된 메서드임을 알려주는 애너테이션
+	
+3. 메타 에너테이션
+	- 애너테이션을 만들때 필요한 애너테이션
+	
+	- @Target 
+		- 애너테이션의 적용 범위
+		- ElementType ,
+	
+	- @Retention
+		- 애너테이션의 적용 시점(정보 전달 시점)
+	
+RetentionPolicy
+	SOURCE : 소스(java) 존재하고, 컴파일 완료 시에는 제거
+				-> 컴파일러에게 정보 전달
+					
+	CLASS : 기본값
+				- 소스(java) 존재, 컴파일 완료(class) 후 존재,
+				->	정보전달 X
+	
+	RUNTIME : 소스(java), 컴파일 완료(class) 후 존재,
+				->	실행중에 정보 전달
+	
+	정의된 내용이 없는 애너테이션 - 마커 애너테이션

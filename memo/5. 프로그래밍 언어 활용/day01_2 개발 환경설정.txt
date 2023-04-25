@@ -1,0 +1,176 @@
+개발환경 설정
+- Maven Project
+	- 빌드 도구
+	- 의존성 관리 도구
+---------------------------------------------------------------------------------------------------------------	
+	
+1. 프로젝트 생성
+mvn archetype:generate
+
+도메인 방식
+	groupId : 소속 그룹, 회사
+	artifactId : 프로젝트
+	
+pom.xml - maven 설정 파일
+
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.7</maven.compiler.source> <!-- 컴파일시 자바 버전 -->
+    <maven.compiler.target>1.7</maven.compiler.target> <!-- 배포시 자바 버전 -->
+  </properties>
+  
+배보시 자바버전
+	- jar
+	- war
+	
+<dependencies>
+    <dependency>
+		-> 의존 라이브러리
+    </dependency>
+  </dependencies>
+  
+	- 메이븐은 의존 모듈을 중앙에서 통제(하나 폴더 공유)
+	- 의존 모듈이 의존하고 있는 모듈은 재귀적으로 설치
+	- junit -> hamcrest-core
+	
+의존 라이브러리 설치 명령어
+cmd - mvn update
+intelJ - 우측 Maven tap
+
+
+<scope>test</scope>
+- complie : 기본값
+		- 컴파일시에도 포함되고, 배포시에도 포함된다, 실행 시에도 포함
+- runtime
+		- 컴파일시에는 포함, 실행시에 포함
+- provided
+		- 컴파일 시 포함, 배포시엔 제외된다
+		- 개발할때만 필요하고, 실 배포시에는 서버에 있는 라이브러리를 사용할 때
+- test
+		- 테스트 시에만 포함
+		- src/test/java
+		
+컴파일
+*mvn compile : java -> class
+	/target
+- 기존 컴파일된 class 파일을 삭제하지않는다, 일괄 컴파일 class
+- 기존 컴파일된 class 파일과 충돌이 발생할 수 있다
+	- target 폴더 삭제 명령어
+		- mvn clean
+		
+	- target 폴더 삭제 후 컴파일
+		- mvn clearn compile
+		
+
+jar
+
+java -jar 배포파일.jar
+
+*배포파일 생성
+- mvn package
+(mvn test가 먼저 진행 - 테스트 통과시에만 배포 파일이 생성)
+
+- 참고)mvn clean package
+
+테스트 수행 - src/test/java 전체 테스트 케이스를 실행
+
+
+target 폴더 생성
+
+
+src/main/java : 개발하는 자바 코드 - 클래스패스
+src/main/resources : 정적 자원(설정 파일 - properties, xml), 클래스 패스
+
+src/test/java : 테스트용 자바 코드 - 클래스 패스
+src/main/resources
+
+target : 클래스 패스 - 컴파일 소스, 배포, 자동 생성 클래스
+
+
+- 클래스 패스 (classpath)란?
+				- 클래스 파일을 자동 인식할 수 있는 경로
+		
+		
+	
+- Tomcat9
+	servlet 4.0
+- smart tomcat (확장팩)
+
+src/main/java
+src/main/webapp
+src/main/webapp/META-INF
+src/main/webapp/WEB-INF
+
+mvnrepository
+
+----------------------------------------------------------------------------------------------------------------
+
+
+TDD(Test Driven Development) : 테스트 주도 개발
+
+
+1. JUnit5
+- 모듈 연동
+- junit-jupiter
+- maven-surefire-plugin
+
+2. @Test 애노테이션과 테스트 메서드
+
+
+3. 주요 단언 메서드
+- 값의 일치
+- true, false 예상
+- (특정)예외가 발생하는지
+- (특정)예외가 발생하지 않는지
+- null, not null
+
+	- 단언 메서드 
+		- assertEquals(expected, actual) : 실제 값(actual)이 기대하는 값(expected)과 같은지 검사한다
+		- assertNotEquals(unexpected, actual) : 실제 값(actual)이 특정 값(unexpected)과 같지 않은지 검사한다
+		- assertAll() : 
+		- assertSame (Object expected, Object actual) : 두 객체가 동일한 객체인지 검사한다.
+		- assertNotSame(Object unexpected, Object actual : 두 객체가 동일하지 않은 객체인지 검사한다.
+		- assertTrue(boolean condition) : 값이 true인지 검사한다.
+		- assertFalse(boolean condition) : 값이 false인지 검사한다.
+ 		- assertNull(Object actual) : 	값이 null인지 검사한다.
+		- assertNotNull(Object actual) : 값이 null이 아닌지 검사한다.
+		- fail() : 	테스트를 실패 처리한다.
+		
+		예외 발생 유무 단언 메서드
+			- assertThrows(Class<T> expectedType, Executable executable) 
+				: executable을 실행한 결과로 지정한 타입의 익셉션이 발생하는지 검사한다.
+			
+			- assertDoesNotThrow(Executable executable) 
+				: executable을 실행한 결과로 익셉션이 발생하지 않는지 검사한다
+		
+회원 가입 기능(Service)
+
+값을 저장, 조회하는 클래스 - 데이터 전달 목적
+DTD(Date Transfer Object)
+VO(Value Object)
+		
+4. 테스트 라이프 사이클
+@BeforeEach
+	- 각 단위 테스트 메서드 호출 전에 수행
+	- 테스트 전 사전 작업시
+	
+@AfterEach
+	- 각 단위 테스트 메서드 수행 완료 후 수행
+	- 테스트 후 마무리 작업
+	
+@BeforeAll
+	- 테스트 수행 전 단 한번만 수행
+	- static으로 메서드 정의
+	
+@AfterAll
+	- 모든 테스트 수행 후 단 한번만 수행
+	- static으로 메서드 정의
+	
+5. 추가 애노테이션
+@DisplayName
+@Disabled : 비활성화
+@TempDir : 임시파일 생성
+@Timeout : 메서드가 실행될 때 특정 시간 안에 실행 되어야한다 (성능테스트)
+
+6. 모든 테스트 실행 명령어
+mvn test

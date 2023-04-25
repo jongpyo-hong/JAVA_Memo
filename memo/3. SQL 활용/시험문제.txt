@@ -1,0 +1,70 @@
+4월 7일 (3~4교시) - sql활용 시험
+- 4~15장
+	- 연습문제 100%
+	
+* SELECT문
+SELECT [ALL | DISTINCT] 컬럼명 FROM 테이블
+
+WHERE 조건식;
+검색은 WHERE절이 참 일때만 조회
+
+* 연산자
+
+- 비교연산자 ( >, <, >=, <=, =)
+
+- 논리연산자 (AND, OR, NOT)
+
+- IN, NOT IN
+
+- 집합 연산자 ( UNION(합집합 - 중복X), INTERSECT(교집합), MINUS(차집합)
+
+
+* 함수
+
+ 1) 단일행 함수 
+	- 문자 CONST, ||, REPLACE, TRIM ...
+	
+	- 숫자 ROUND, CEIL, FLOOR, TRUNC
+	
+	- 날짜 (+, -) 가지고 일자를 추가, 감소,  
+			 날짜 - 날짜 -> 차이(일수)
+			 ADD_MONTHS
+			 MONTH_BETWEEN
+	
+	- 기타
+			TO_NUMBER
+			TO_DATE
+			TO_CHAR
+ 
+ 2) 다중행 함수
+		SUM, AVG, MAX, MIN, COUNT
+		SUM( [ALL | DISTINCT] 컬럼 )
+			
+		- GROUP BY 컬럼, 컬럼...
+			- 공통의 값으로 묶어 주는 역할
+			- 부서별 통계, 부서별 + 직책별 통계
+			- 공통값의 갯수가 행의 갯수
+			- 출력되는 컬럼은 GROUP BY에 명시된 컬럼명
+				
+		- 집계함수의 조건식
+			(WHERE - X HAVING - O)
+
+	
+* 사전테이블 조회, 제약조건
+EX) SELECT * FROM USER_CONSTRAINTS
+	 WHERE TABLE_NAME='DEPT_SUB';
+	 
+	 ALTER TABLE DEPT_SUB DISABLE CONSTRAINT FK_DS_DEPTNO; // 제약조건 비활성화
+	 
+	 INSERT INTO DEPT_SUB VALUES (30, '서브5', 50); 
+	 -> DEPTNO 부모키의 값이 40까지 있어 제약조건 때문에 오류, 비활성화 이후 가능
+	 
+* JOIN 부분 챕터 마지막 연습문제
+	 *조인 = 테이블간의 연결
+EX) 두개이상 조인
+	
+	SELECT * FROM EMP E
+		JOIN DEPT D ON E.DEPTNO = D.DEPTNO 
+		LEFT JOIN DEPT_SUB S ON D.DEPTNO = S.DEPTNO;
+		
+* 부속질의

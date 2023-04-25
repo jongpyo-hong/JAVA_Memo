@@ -1,0 +1,99 @@
+입출력(I/O)
+자바에서의 입출력
+input/Output
+
+1. 입출력이란?
+- 데이터의 입력, 출력
+2. 스트림(stream)
+- 데이터(문자, 숫자, 객체)를 운반하는데 사용되는 연결통로
+	- 입력 스트림
+	- 출력 스트림
+
+
+바이트기반 스트림(추상클래스)
+1. InputStream : 바이트 입력 스트림 : int read()
+		양의 정수(unsigned byte) : byte는 0 ~ 255의 공간만 가능하다
+		* -1 : 파일의 끝에 도달한 경우
+		* -1 ~ 255 : 숫자의 범위가 byte를 넘어서므로 가장 효율적인 int 형으로 반환받는다
+		
+	- ByteArrayInputStream : 메모리 기반 입력 스트림
+	- FileInputStream : 파일 기반 입력 스트림
+
+2. OutputStream : 바이트 기반 출력 스트림 : write()
+	- ByteArrayOutputStream : 메모리 기반 출력 스트림
+	- FileOutputStream : 파일 기반 출력 스트림
+	
+		기반 스트림 : 데이터에 직접 접근하는 스트림
+
+
+문자기반 스트림(2바이트(CPC949, EUC-KR), 3바이트(UTF-8))
+1. Reader : 문자기반 입력 스트림
+	- 메모리 기반 스트림
+		- CharArrayReader
+		- StringReader
+		
+	- 파일 기반 스트림
+		- FileReader
+	
+2. Writer : 문자기반 출력 스트림
+	- 메모리 기반 스트림
+		- CharArrayWriter
+		- StringWriter
+		
+	- 파일 기반 스트림
+		- FileWriter
+
+
+바이트 기반의 보조 스트림
+	기반 스트림 : 직접 데이터에 접근, 처리하는 스트림
+	보조 스트림 : 다른 스트림에 추가기능 : 데코레이터 패턴
+	
+	* 생성자 매개변수가 InputStream이 아니면 기반 스트림
+
+1. FilterInputStream : 입력 보조 스트림의 상위 클래스 (추가기능)
+	ex) Calculator cal1 = new UpgradeCalculator(new PerfCheckCalculator(new ImplCalculator()));
+
+
+	class FilterInputStream extends InputStream {
+		protected InputStream in;
+		
+		...
+		
+		public FilterInputStream(InputStream in) {
+			this.in = in;
+		}
+		
+		....
+		
+		public int read() {
+			
+			// 추가 로직 (추가 기능)
+			int byte = in.read();
+			
+			// 추가 로직 (추가 기능)
+			return byte;
+		
+		}
+	}
+	
+	- BufferedInputStream
+	- DataInputStream
+	
+	
+	- ObjectInputStream
+
+2. FilterOutputStream : 출력 보조 스트림의 상위 클래스
+	- BufferedOutputStream
+	- DataOutputStream
+	
+	
+	- ObjectOutputStream
+
+
+
+
+문자 기반의 보조 스트림
+
+
+
+표준 입출력

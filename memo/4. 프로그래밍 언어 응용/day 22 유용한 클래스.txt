@@ -1,0 +1,39 @@
+유용한 클래스
+1. java.lang.Math
+- 수학관련 유용한 기능
+	PI : 원주율
+	abs(...) : 절대값
+	ceil(...) : 올림
+	floor(...) : 버림
+	round(...) : 반올림
+	pow(a, b) : a^b (a의 b승)
+	random() : 0~1 사이의 double형태의 무작위 수 반환
+	***tan()
+	
+2. java.util.Object
+- 객체를 다루는 편의기능(주로 뒤에 s가 붙어있다)
+	- java.util.Arrays : 배열을 다루는 편의기능
+	- java.util.Collection : 컬렉션 편의기능
+	
+deepEquals(Object a, Object b)
+	-> 다차원 배열
+hash(Object... args) : ... - 가변매개변수
+
+3. java.util.Random
+	-> 무작위 수
+
+4. java. util.Scanner
+	
+	System.out : PrintStream -> OutputStream
+	System.in : inputStream
+					read()
+
+5. java.util.StringTokenizer
+	- 토큰으로 문자열을 차례대로 자를때
+		ex) String fruits = "Apple,Mango#Banana|Melon";
+			StringTokenizer st = new StringTokenizer(fruits, ",#|");
+
+			while(st.hasMoreTokens()) {
+            String fruit = st.nextToken();
+            System.out.println(fruit);
+        } // Apple Mango Banana Melon

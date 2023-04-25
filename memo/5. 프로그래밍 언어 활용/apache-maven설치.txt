@@ -1,0 +1,66 @@
+1. apache-maven
+
+2. 3.9.1 bin-zip 다운로드
+
+3. bin경로 복사 -> 시스템 환경변수 -> 환경변수 -> Path // 새로만들기 후 경로 추가 
+
+3-1 . (없으면) %JAVA_HOME%bin -> 시스템변수에 JAVA_Home 있는지 확인
+3-2 . (없으면)C\program FIles\Java\jdk-11 경로복사후 시스템 변수편집// 변수값에 복사(변수이름 : JAVA_HOME)
+
+4. 설치후 cmd -> mvn -v 입력후 확인
+
+1. 프로젝트 생성
+	mvn archetype:generate
+	
+		도메인 방식(거꾸로)
+		groupId : 소속 그룹, 회사
+		artifactId : 프로젝트
+2. groupId : org.koreait
+2-1. artifactId : day01_2
+
+3. intelli J : 파일 생성후 Settings // Plugins // smart Tomcat 설치
+		google : tomcat 9 다운받기 -> Core // 64bit-windows
+
+3-1 : pom.xml // 
+  <properties> <!-- 변수에 관한 부분 -->
+    <project.bulid.sourceEncoding>UTF-8</project.bulid.sourceEncoding>
+    <maven.compiler.source>20</maven.compiler.source>
+    <maven.compiler.target>20</maven.compiler.target>
+  </properties>입력
+  
+  
+4. src - directory // main-java
+			main - directory // webapp
+			webapp - directory // META-INF
+			webapp - directory // WEB-INF
+	src - directory // test-java
+	
+5. 상단의 Current File - Edit ConfigFile // Add new // 
+			Smart Tomcat = 이름 : tomcat9, 경로 : 다운받은 tomcat 경로
+			Deployment directory : webapp
+			포트 - 기본 8080
+		apply -> ok
+
+6. webapp // new File - index.jsp 생성
+
+7. google에서 mvnRepository 검색 - 북마크
+	jupiter api junit 검색 //  JUnit Jupiter (Aggregator) 5.9.2 // Maven 
+		// <dependency> ... </dependency> 안의 내용 복사
+	pom.xml 에 <dependencies>안에 복사 </dependencies>
+	
+8. mvnrepository // maven surefire plugin 검색 // 3.0.0 내의 Maven내용 복사
+	<build>
+		<plugins>
+			<plugin>
+				여기 복사하기
+			</plugin>
+		</plugins>
+	</build>
+
+9. test/java에 tests 디렉토리 생성/ Exam01Test 클래스 생성
+	@Test
+	@DisplayName("더하기 테스트")
+	void test1() {
+		int result = 2 + 3;
+        assertEquals(5, result);
+	}

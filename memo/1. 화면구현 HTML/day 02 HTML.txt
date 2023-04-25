@@ -1,0 +1,145 @@
+03.08 HTML
+
+* 테이블
+table - 표
+
+<table>
+    <thead>
+	<tr> - 행
+	    <th>항목</th>
+	     ....
+	</tr>
+    </thead>
+    <tbody>
+	<tr> - 행
+	    <td>데이터</td>
+	    ....
+	</tr>
+    </tbody>
+
+</table>
+
+Table
+    -width : 넓이
+    -height : 높이
+
+    td, th
+	- align : left | right | center
+	- rowspan : 행 병합 -> 수치 만큼
+	- colspan : 열 병합 -> 수치 만큼
+
+* 리스트 태그(List)
+
+* ul (Unordered List) : 순서 표기를 하지 않는 목록
+    li
+
+
+ol (ordered List) : 순서 표기가 있는 목록
+    li 
+
+ol
+    type : 1 - 숫자로 표기
+          : A - A, B, C
+          : a - a, b, c
+          : I - I, II, III
+          : i - i, ii, iii
+
+* dl (Description List)
+    dt
+    dd
+
+
+* Block Level 요소(태그)
+- 문단
+ex) p태그, div태그
+
+넓이, 높이가 있다
+줄개행
+상하좌우 외부 여백 적용가능
+
+* Inline Level 요소(태그)
+- 문장
+ex) a태그, span태그
+
+넓이,높이가 없다
+줄개행 X
+좌우 외부 여백 적용가능
+
+* 선택 관련 속성
+** class - 복수선택시
+** id - 아이디
+
+* iframe
+    *src = 주소
+    scrolling = yes | no
+    frameborder = 1 | 0
+    *name
+
+
+<style>
+HTML 스타일 정의 -> 스타일 시트 해석 엔진 해석
+</style>
+
+<script>
+자바스크립트 소스 -> 자바스크립트 해석 엔진 ...(V8)
+</script>
+
+시멘틱 요소(태그)
+    - 의미를 가진 태그
+    - 유지 보수의 편의성을 높인다
+    
+    <table>
+    <header>
+    <footer>
+    <aside>
+    <nav>
+    <main>
+    <address>
+    <details>
+    <form>
+
+*** HTML Forms(양식)
+
+<form>
+	- method : 제출 방식 (GET, POST)
+	- action : 제출 경로
+	
+	<input>
+			type : text - 한줄 입력
+				  : password - 비밀번호 형식
+				  : radio - 여러개 중 한개 선택
+				  : checkbox - 여러개 중 여러개 선택
+				
+				  <label>로 radio 태그를 감싸면 텍스트만 클릭해도 선택
+				  - checked : 선택
+				  : submit -> 제출
+				  : email - 이메일
+				  : number - 숫자
+							- min = 최소값
+							- max = 최대값
+				  : date -> 날짜
+				  : color -> 색상선택
+				  : range -> 선택바
+				  : hidden -> 안보이는 전송 데이터
+				  : submit -> 제출
+				  : reset -> 재입력
+				  
+				value : 입력 값
+				
+				placeholder : 안내문구
+
+			<select> : 여러개 중에서 선택
+					- multiple : 여러개 선택
+					- size : 수치 만큼 보이는 개수
+				 <option> : 선택 항목
+					- selected : 미리 선택되있다
+			<textarea>
+				- 여러줄 텍스트
+				- rows : 행
+				- cols : 열
+				
+			<button>
+				type="button" : 일반 버튼
+						"submit" : 제출버튼
+						"reset" : 재입력 버튼
+</form>

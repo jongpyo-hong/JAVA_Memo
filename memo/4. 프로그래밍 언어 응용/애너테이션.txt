@@ -1,0 +1,33 @@
+애노테이션 (Annotation)
+	- 기능이 아닌 정보전달 목적
+	- @interface 애너테이션 명 { // 특수한 목적의 인터페이스
+	
+	}
+	- extends java.lang.annotation.Annotation 자동 상속
+	
+1) 표준 애너테이션
+	- @Override : 메서드 재정의
+	- @Deprecated : 사용되지 않을것을 권장하는 대상에게 사용
+	- @SuppressWarnings : 경고메세지 제한
+	- @FunctionalInterface : 함수형 인터페이스
+
+2) 메타 애너테이션
+	- 애너테이션을 만들때 필요한 애너테이션
+		- @Target
+			- 적용 대상
+			- ElementType
+				.TYPE : 클래스, 인터페이스, Enum ...
+				.FIELD : 멤버 변수
+				.METHOD : 메서드
+				.TYPE_USE : 참조 수를 매개변수로 쓴다
+				.PARAMETER
+				.TYPE_PARAMETER
+			
+		- @Retention
+			- 정보를 전달하는 시점
+			- RetentionPolicy
+				- SOURCE : java 소스상에 존재, 컴파일이되면 제거
+				
+				- CLASS : java 소스상에 존재하고 클래스에도 존재, 정보전달 X
+				
+				- RUNTIME : java 소스, 클래스에 존재, 실행 중 정보 전달

@@ -1,0 +1,89 @@
+내장 생성자
+1. Object
+	- 모든 객체의 출처
+	const obj = {}; // new Object()
+	{} -> [[Prototype]] Object.prototype // new Object()
+	
+*** 2. String - 래퍼 생성자 객체
+	- 메서드 = indexOf(), includes(),...
+	const str1 = "abc";
+	const str2 = str1.concat("def","ghi") // new String("abc") -> "abc"
+	str2 = "abcdefghi"
+
+
+3. Number - 래퍼 생성자 객체
+	- 속성 = MAX_VALUE, MIN_VALUE, NaN ...
+	- 메서드 = isNaN() , *parseFloat(), *parselnt()
+	- NaN (Not a Number - 숫자 아닐때)
+	  NaN
+	  Number("값") -> 문자열로 된 숫자는 -> 숫자
+	  
+	  is -> ~ 인지 아닌지
+	  parse -> 변환
+	  *parseInt(값) -> 값을 정수로 변환
+	  *parseFloat(값) -> 값을 실수로 변환
+	  
+const num = 10000;
+num.toFixed(2); // new Number(num) -> num
+num = "10000.00";
+
+4. Boolean
+	Boolean(값) ->  실제 논리값
+	
+5. Array - 배열 생성자 객체
+		   - 많은 데이터를 한꺼번에 담아서 다룰때
+
+
+6. Date - 날짜
+	
+
+7. Error - 
+try{
+	// 오류가 발생할 수 있는 코드
+	throw new Error(...); // 에러발생 - throw
+	
+} catch (Error 객체) { // 발생한 에러에 대한 정보
+
+}
+
+ex)
+try {
+    const result = false;
+    if (!result) {
+        throw new Error("에러 발생");
+    }
+
+    console.log("실행코드");
+
+    
+} catch(err) {
+    console.error(err); // err.message
+    alert(err.message);
+}
+
+내장객체
+1. JSON
+	- 데이터를 교환하기 위한 수단 - JSON 문자열
+	
+	- *parse : JSON 문자열 -> javascript 객체로 변환
+	- *stringify : javascript 객체 -> JSON 문자열로 변환
+	
+2. Math - 수학 관련 기능
+	- *Math.abs() 절대값, *ceil() 올림, *floor() 버림, *round() 반올림, *random() 무작위 수 ...
+		abs() : 절대값(음수 -> 양수)
+		sign() : 음수 = -1, 양수 = 1, 0 = 0
+		*round() : 반올림
+		*ceil() : 올림
+		*floor() : 버림
+		random() : 0~1 미만의 랜덤한 수
+		pow() : 제곱을 구할때
+
+전역속성
+1. undefined
+2. NaN
+3. Infinity
+
+전역 함수
+1. parselnt() : 정수로 변환
+2. parseFloat() : 실수로 변환
+3. isNaN() -> Number("값") : -> NaN 발생 -> true, X -> false

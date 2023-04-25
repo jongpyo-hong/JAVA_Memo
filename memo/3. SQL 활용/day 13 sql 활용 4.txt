@@ -1,0 +1,94 @@
+함수
+	- 단일행 함수
+		ROUND
+		CEIL
+	- 다중행 함수
+		- 여러행 결과 -> 값
+		- 통계용 함수
+		
+		- SUM : 합계
+		- COUNT : 행의 갯수
+		- MAX : 최대값
+		- MIN : 최소값
+		- AVG :  평균
+		
+		NULL은 통계에서 제외
+		[ALL | DISTINCT ] 컬럼명
+		
+		ALL - 전체
+		DISTINCT - 중복을 제외한 행
+		
+1. 하나의 열에 출력 결과를 담는 다중행 함수
+GROUP BY 컬럼명 -> 컬럼명의 공통 값을 가지고 행을 묶어주는 기능
+EX) 부서 번호별 급여 통계
+
+부서별, 직책별 급여 통계
+SELECT DEPTNO, JOB, // DEPTNO, JOB 컬럼 선택
+	SUM(SAL) 급여합계,  // SAL(급여)의 합계
+	ROUND(AVG(SAL)) 급여평균,  // 반올림(급여의 평균)
+	MAX(SAL) 최대값,  // 급여의 최대값
+	MIN(SAL) 최소값  // 급여의 최소값
+FROM EMP GROUP BY DEPTNO, JOB ORDER BY DEPTNO, JOB;
+// EMP 테이블에서 DEPTNO, JOB 를 그룹화해서 정렬한다.
+
+
+
+2. 결과 값을 원하는 열로 묶어 출력하는 GROUP BY절
+부서별 급여 통계
+
+2000불 이상 받는 직원들의 통계, 부서별 평균 급여가 2000불 이상
+-> GROUP BY, 집계함수조건식 -> HAVING
+-> GROUP BY
+
+SELECT DEPTNO,  // EMP 테이블내에 DEPTNO를 선택
+	SUM(SAL)합계,  // EMP의 SAL(급여)의 합계
+	ROUND(AVG(SAL)) 평균  // 반올림(급여의 평균)
+FROM EMP
+	GROUP BY DEPTNO,JOB // DEPTNO, JOB을 그룹화
+	HAVING AVG(SAL) >= 2000  // 비교연산을 위한 HAVING
+	ORDER BY DEPTNO, JOB; // DEPTNO, JOB을 그룹화후 정렬
+	
+3. 그룹화와 관련된 여러 함수
+
+1) ROLLUP
+EX)
+	SELECT
+		DEPTNO,
+		JOB,
+		SUM(SAL) 합계,
+		ROUND(AVG(SAL)) 평균,
+		MAX(SAL) 최대,
+		MIN(SAL) 최소
+	FROM EMP
+	GROUP BY ROLLUP(DEPTNO, JOB);
+
+2) CUBE
+EX)
+	SELECT
+		DEPTNO,
+		JOB,
+		SUM(SAL) 합계,
+		ROUND(AVG(SAL)) 평균,
+		MAX(SAL) 최대,
+		MIN(SAL) 최소
+	FROM EMP
+	GROUP BY CUBE(DEPTNO, JOB);	
+
+3) ROUPING SETS
+EX)
+
+4) LISTAGG
+EX)
+	SELECT 
+		DEPTNO,
+		LISTAGG(JOB, ',')
+		WITHIN GROUP(ORDER BY DEPTNO) AS JOBS
+	FROM EMP
+	GROUP BY DEPTNO;
+	
+
+5) PIVOT
+EX)
+
+6) INPIVOT
+EX)

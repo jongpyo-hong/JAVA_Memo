@@ -1,0 +1,121 @@
+SQL
+		DDL - 데이터 정의어 (Data Definition Language)
+		- 테이블, 인덱스, 제약조건, 시퀀스, 뷰...
+			- SQL이 실행이 되면 바로 COMMIT이 되며 다른 세션에서도 바로 확인가능
+		
+		DML - 데이터 조작어 (Data Manipulation Language)
+			데이터를 직접 조작하는 언어
+			- 추가 (INSERT)
+			- 수정 (UPDATE)
+			- 삭제 (DELETE)
+			- 조회 (SELECT)
+			
+			COMMIT을 해야 영구반영된다. (ROLLBACK 가능)
+		
+		DCL - 데이터 통제어(권한) (Data Control Language)
+			- GRANT, REVOKE
+
+
+
+1. 인덱스 (INDEX)
+
+1) 인덱스 생성
+
+CREATE INDEX 인덱스이름 ON 테이블명 (컬럼이름1 [ASC | DESC], 컬럼명 
+													  컬럼이름2 [ASC | DESC], 컬럼명
+													  ....);
+
+EX) CREATE INDEX IDX_EMP_SAL ON EMP(SAL);
+
+2) 인덱스 삭제
+
+DROP INDEX 인덱스명;
+
+EX) DROP INDEX IDX_EMP_SAL;
+
+
+
+2. 뷰 (VIEW)
+
+0) 뷰 선택 : SELECT * FROM 뷰이름
+- SELECT * FROM USER_VIEWS; - 유저가 가진 VIEW 조회
+- SELECT * FROM ALL_VIEWS; - 모든 VIEW 조회
+
+
+1) 뷰 생성 : CREATE VIEW 생성할 뷰이름 AS SELECT * FROM WHERE 조회할 기존의 테이블 컬럼명;
+
+EX) CREATE VIEW VW_EMP20 AS SELECT * FROM EMP WHERE DEPTNO=20;
+
+
+
+
+2) 뷰 수정 : CREATE OR REPLACE VIEW 뷰이름 AS SELECT * FROM WHERE 조회할 기존의 테이블 컬럼명;
+
+EX) CREATE OR REPLACE VIEW VW_EMP20 AS SELECT * FROM EMP WHERE DEPTNO=30;
+
+
+
+3) 뷰 삭제 : DROP VIEW 뷰이름
+
+EX) DROP VIEW VW_EMP20;
+
+4) 별칭 : SELECT * FROM 테이블이름 별칭;
+EX) SELECT E.JOB FROM EMP E; - EMP테이블의 별칭을 E로 설정하고 그안의 JOB 컬럼을 조회
+
+EX) SELECT ENAME [AS] "직원명", JOB [AS] "직책" FROM EMP; - EMP테이블 안의 ENAME의 별칭을 직원명, JOB은 직책으로 설정후 조회
+
+
+5) INLINE VIEW : 
+EX) WITH E AS (SELECT EMPNO, ENAME, JOB FROM EMP WHERE DEPTNO=20)
+SELECT * FROM E WHERE E.JOB='CLERK';
+
+6)ROWNUM
+
+EX)
+
+3. 시퀀스
+
+0) 시퀀스 조회
+	SELECT * FROM ALL_SEQUENCES;
+	SELECT * FROM USER_SEQUENCES;
+
+1) 시퀀스 생성
+	CREATE SEQUENCE 시퀀스명; (시퀀스는 1부터 시작, 무한히 증가)
+	
+	EX) CREATE SEQUENCE SEQ_DEPT;
+
+
+1-1) 시퀀스 세부조정
+	CREATE SEQUENCE 시퀀스명
+		INCREMENT BY 수치
+		START WITH 시작값
+		MAXVALUE 최대값
+		MINVALUE 최소값
+		CYCLE -> 최대값에 도달 -> 최소값
+		CACHE 수치
+		NOCACHE(기본값) -> 매번 수치 증가 생성
+
+2) 시퀀스 변경
+	ALTER SEQUENCE 시퀀스명
+		INCREMENT BY 수치
+		START WITH 시작값
+		MAXVALUE 최대값
+		MINVALUE 최소값
+		CYCLE -> 최대값에 도달 -> 최소값
+		CACHE 수치
+		NOCACHE(기본값) -> 매번 수치 증가 생성
+		
+		EX) ALTER SEQUENCE SEQ_DEPT;
+
+
+3) 시퀀스 삭제
+	DROP SEQUENCE 시퀀스명;
+	
+
+4. 동의어 SYNONYM
+
+1) 동의어 생성 = 권한이 필요하다 -> 시스템계정 GRANT CREATE SYNONYM TO 계정;
+	CREATE SYNONYM 동의어 FOR 객체명;
+
+2) 동의어 삭제
+	DROP SYNONYM 동의어;

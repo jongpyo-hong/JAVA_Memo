@@ -1,0 +1,91 @@
+*데이터베이스 설치 보고서*
+
+ip 주소 - 현 컴퓨터
+통로 - 1521
+
+* sqlplus.exe -> 오라클 데이터베이스 관리 콘솔 프로그램
+sqlplus 사용자계정/비밀번호
+ex) sqlplus system/_aA123456
+
+system -> 최고 관리자 계정 : 모든 권한을 가지고 있는 계정
+
+1) 데이터베이스 접속 : cmd -> sqlplus system/_aA123456
+
+
+2) 사용자 변경 : ALTER USER scott IDENTIFIED BY tiger ACCOUNT UNLOCK;
+
+
+3) 접속 : CONN - 다른 사용자 계정으로 변경(접속 상태에서)
+CONN scott/tiger
+CONN system/_aA123456 
+
+
+
+4) 권한 GRANT - 생성, 수정, 삭제(권한이 필요한 작업)는 관리자 권한을 가져야 가능;
+-> 관리자 권한 부여
+
+		GRANT 시스템 권한, .... TO 사용자 계정 | ROLE | PUBLIC
+			[WITH ADMIN OPTION] - 사용자 계정이 가지고 있는 권한을 다른 사용자에게 부여
+			
+		GRANT ALL PRIVILEGES TO ...
+			-> 전체 시스템 권한(최고관리자)
+			
+
+4-1) 생성 CREATE - 사용자명은 대소문자를 상관없이 사용하는데 비밀번호는 구분한다
+CREATE USER 사용자명 IDENTIFIED BY 비밀번호
+		PASSWORD EXPIRE
+		ACCOUNT[LOCK | UNLOCK];
+		
+4-2) 수정 ALTER
+ALTER USER 사용자명 IDENTIFIED BY 비밀번호
+		PASSWORD EXPIRE
+		ACCOUNT [LOCK | UNLOCK]
+		
+4-3) 삭제 DROP
+		DROP USER 사용자명 CASCADE; - 스키마 - 객체까지 전부 삭제
+		
+		
+		
+5) 권한
+
+1. 시스템 권한 테이터의 구조를 통제하는 권한
+
+시스템 권한 :
+	- 사용자 USER
+	- 접속 SESSION
+	- 테이블 TABLE
+	- 뷰 VIEW
+	- 인덱스 INDEX
+	- 시퀀즈 SQUENCE
+	
+	- ROLE : 여러 권한을 한꺼번에 모아 놓은 역할
+	
+	GRANT 시스템권한,.. ALL PRIVILEGES TO 사용자계정 | ROLE | PUBLIC
+			[WITH ADMIN OPTION] - 관리자권한
+
+2. 객체권한
+	- 테이블
+	- 테이블의 데이터를 추가, 수정, 삭제하는 권한
+	
+	GRANT 객체권한, .... ON 스키마명(계정).객체명(테이블) TO 사용자명 | ROLE | PUBLIC
+		[WITH GRANT OPTION] - 사용자계정이 가지고 있는 '객체권한'을 다른 사용자에게 부여
+		
+	GRANT ALL PRIVILEGES ON 스키마명.객체명 TO 사용자명 | ROLE | PUBLIC ...
+		-> 전체 '객체권한' 부여
+		[WITH GRANT OPTION] - 관리자 권한
+		
+3. 권한취소 REVOKE
+	시스템 권한
+			REVOKE 시스템권한, ... [ALL PRIVILEGES] FROM 사용자계정 | ROLE | PUBLIC
+	
+	객체 권한
+			REVOKE 객체권한, ... [ALL PRIVILEGES] ON 스키마명.객체명 FROM 사용자 계정 | ROLE | PUBLIC
+
+* ROLE :
+CREATE ROLE 롤명칭;
+
+GRANT 권한 .... TO ROLE 롤명칭;
+
+DROP ROLE 롤명칭
+
+* RESOURCE, CONNECT

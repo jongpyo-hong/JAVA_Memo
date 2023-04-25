@@ -1,0 +1,73 @@
+자바 IO
+
+표준 입출력
+1. System.in : 콘솔(터미널) 읽기
+	InputStream : 바이트 단위 스트림
+	
+2. System.out
+	PrintStream : 문자 단위 스트림
+		* PrintWriter (문자 단위 스트림)
+	
+3. System.err : 출력이 빨간색..
+	PrintStream
+	
+PrintStream
+	- print : 문자 또는 숫자의 값 출력
+	- println : 값의 출력 + 줄개행 문자(\n)
+	- println() : 줄개행 문자(\n)
+	
+	- printf : 형식화 출력
+		- %s : 문자열
+		- %c : 문자
+		- %d : 정수
+		- %f : 실수
+		- %n : 줄개행
+		
+		setOut
+		setIn
+		setErr
+	
+
+메타 문자 - 문자앞에 \
+\n : new line - 줄개행(LF)
+\t : 탭키 1번
+\b : 백스페이스 키
+\r : 커서를 가장 앞으로 이동(CR)
+
+엔터(\r\n)
+
+	
+
+File
+- 파일, 디렉토리
+
+D:\
+/
+
+개발 -> 윈도우즈, 배포 -> 리눅스 서버
+			(\)					(/)
+			(/)
+			
+- File.separator : OS에 맞는 파일 구분 문자로 변환
+- File.path.separator : 환경 변수 구분 문자
+							윈도우즈 -> ;
+							리눅스(맥) -> :
+
+. - 현재경로
+.. -> 상위경로
+
+----------------------------------------------------------------------------------------------------------
+
+직렬화(Serialization)
+1. ObjectInputStream
+	: 직렬화된 데이터 -> 원래 객체로 변환 (인스턴스 변수만 가능하다)
+
+2. ObjectOutputStream
+	: 원래 객체 -> 직렬화된 데이터
+	
+3. 직렬화가 가능한 클래스 만들기
+	- Serializable
+	
+	
+	- transient : 직렬화 제외
+4. 직렬화 가능한 클래스의 버전관리

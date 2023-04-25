@@ -1,0 +1,128 @@
+Object 클래스
+2. equals() 메서드
+	public boolean equals(Object obj) {
+		return (this == obj);
+}
+		
+		== : 주소의 비교 : 동일성 비교
+		
+		equals : 재정의를 통해서 동등성 비교
+		
+		
+3. hashCode() 메서드
+	- 기본 정의 : 인스턴스의 주소(물리적 주소X)
+	
+	동등성 비교의 기분 - equals, hashCode 이 두가지가 같아야 동등하다
+		ex) String 클래스는 equals, hashCode가 재정의 되어있다 (동등성 비교)
+		
+**  동일성 비교 == : 객체의 주소값이 같아야 같다, 리터럴상수비교
+	
+	동등성 비교 : equals, hashCode가 같아야 같다
+					equals와 hashCode를 재정의함으로 동등성 비교를 같게 할 수 있다.
+					- String 비교
+	
+* String 클래스
+문자열
+
+1. String을 선언하는 두 가지 방법
+String str = "문자열";
+String str = new String("문자열");
+
+2. String 클래스의 final char[] 변수
+
+char[] -> jdk12
+byte[] -> jdk12 이후
+	final -> 상수 -> 문자열은 불변
+	byte[10] 정의 -> 바꿀수 없다
+
+3. StringBuffer와 StringBuilder 클래스 활용하기
+
+Buffer -> 임시메모리
+- 일반 String 클래스는 문자열을 결합 할때마다 주소가 바뀌지만 
+   StringBeffer을 쓰면 주소값이 바뀌지 않는다
+   
+메서드 재정의 : 인스턴스 메서드
+					 정적메서드는 정의할 필요없이 바로 접근이 가능하다
+					 
+					 
+Wrapper 클래스
+1. 기본 자료형을 위한 클래스
+	- 기본 자료형을 감싼 형태의 클래스
+	
+	- int : integer
+	
+	int num = 10;
+	
+	class integer {
+		....
+		
+		int value;
+		
+		....
+	}
+	
+2. Integer 클래스 사용하기
+3. 오토박싱과 언박싱
+
+java.lang.Number
+정수 : Byte, Short, Integer, Long
+실수 : Float, Double
+
+
+Class 클래스
+- 클래스의 정보가 담겨있는 객체
+- 클래스 로더 -> 자동 생성되는 객체
+	1) Object 
+			Class getClass() : 객체 생성후 조회
+	
+	2) 모든 클래스의 정적 변수 (class) : 객체 생성 없이 정적으로 접근 가능
+			
+	3) 동적 클래스 로딩
+			Class.forName()
+		- 실행중 (Runtime) 클래스 파일 -> 데이터 영역 로드
+		- 반환값은 Class : 클래스 정보
+
+유용한 클래스
+1. java.lang.Math
+- 수학관련 유용한 기능
+	PI : 원주율
+	abs(...) : 절대값
+	ceil(...) : 올림
+	floor(...) : 버림
+	round(...) : 반올림
+	pow(a, b) : a^b (a의 b승)
+	random() : 0~1 사이의 double형태의 무작위 수 반환
+	***tan()
+	
+2. java.util.Object
+- 객체를 다루는 편의기능(주로 뒤에 s가 붙어있다)
+	- java.util.Arrays : 배열을 다루는 편의기능
+	- java.util.Collection : 컬렉션 편의기능
+	
+deepEquals(Object a, Object b)
+	-> 다차원 배열
+hash(Object... args) : ... - 가변매개변수
+
+3. java.util.Random
+
+4. java. util.Scanner
+
+5. java.util.StringTokenizer
+
+
+final 예약어
+- 변경 불가
+
+1. 변수 : 
+	final int num; -> 상수
+
+2. 메서드
+	-> 재정의 불가
+
+3. 클래스
+	-> 상속 불가
+	
+*메서드 재정의시 접근 제어자의 범위 변경
+(더 넓은 범위로 재정의 가능)
+default -> protected, public
+protected -> public

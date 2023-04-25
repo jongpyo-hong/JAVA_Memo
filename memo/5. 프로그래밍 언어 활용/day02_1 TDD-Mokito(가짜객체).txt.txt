@@ -1,0 +1,37 @@
+Mockito 기초 사용법
+의존성 (maven repository)
+
+<properties>
+    <project.bulid.sourceEncoding>UTF-8</project.bulid.sourceEncoding>
+    <maven.compiler.source>20</maven.compiler.source>
+    <maven.compiler.target>20</maven.compiler.target>
+  </properties>
+
+junit-jupiter 
+mockito-core
+javax servlet-api
+
+
+servlet-api
+
+1. 모의 객체 생성
+	mock() 메서드
+	가짜 객체
+		HttpSession
+		HttpServletRequest - 특정상황에서만 사용하는 인터페이스
+		
+2. 스텁 설정
+	- 특정 메서드에 반환값
+		given(....)
+			.willReturn
+			.willThrow
+	
+	- 특정 메서드 -> 예외
+	
+	로그인한 경우는 (아이디명)님 로그인 ... 메서드 생성
+	
+3. JUnit 5 확장 설정 
+- mockito-junit-jupiter (maven repository)
+
+	@ExtendWith(MockitoExtension.class) // class 위쪽 애너테이션 추가
+	@Mock : 모의 객체를 바로 생성 // 가짜객체를 대신 생성

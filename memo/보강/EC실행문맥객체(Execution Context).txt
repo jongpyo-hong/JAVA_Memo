@@ -1,0 +1,44 @@
+var num0 = 5;
+function func1() {
+    var num1 = 10;
+
+    function func2() {
+        var num2= 20;
+        var result = num1 + num2;
+
+        return result;
+    }
+
+    var re = func2();
+    console.log(re);
+}
+
+
+Global EC (전역 실행 문맥 객체)
+	변수에 대한 구성
+		- window의 하위 속성으로 추가
+		
+	외부 함수 EC 변수 참조 : null
+	
+	this 바인딩(범위 결정) : window
+
+func1 EC(실행문맥 객체 - Execution Context)
+	변수에 대한 구성
+		- 원시타입 변수
+		- 참조 타입 변수
+			num1 : 10
+		- 참조 타입 변수(객체)
+		
+	외부 함수 EC 변수 참조 : Global EC
+	
+	this 바인딩(범위 결정) : 호출한 객체 = this
+	
+func2 EC(실행문맥객체 - Execution Context)
+	변수에 대한 구성
+		- 원시타입
+			num2 : 20
+		- 참조타입
+		
+	외부 함수 EC 변수 참조 : func1 EC
+	
+	this 바인딩(범위 결정) : 호출한 객체 = this

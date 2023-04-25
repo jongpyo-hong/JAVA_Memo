@@ -1,0 +1,95 @@
+스트림의 중간연산
+
+1. 스트림 요소 걸러내기
+- filter() : 걸러내기 (Predicate)
+- distinct() : 중복 제거
+- skip() : 건너뛰기
+
+2. 정렬 - sorted()
+
+3. 변환 - map()
+
+4. 조회 - peek()
+	
+		void forEach(...) : 최종연산
+		Stream<T> peek(...) : 중간연산
+			- 중간에 값을 확인한다
+
+5. mapToInt(), mapToLong(), mapToDouble()
+- 기본형 스트림은 숫자를 다루는 편리한 메서드를 제공
+
+IntStream mapToInt()
+IntStream mapToLong()
+IntStream mapToDouble()
+
+	- IntSummaryStatistics()
+		- getSum() 합
+		- getAvg() 평균
+		- getCount() 갯수
+		- getMax() 최대값
+		- getMin() 최소값
+
+6. Optional
+	- Wrapper 클래스의 일종
+	- 다양한 null값 처리가 목적
+
+class Optional<T> {
+	...
+	private T value;
+	...
+}
+
+Optional 객체 생성
+	- .of(T t) - 요소가 없거나 null 값이면 예외발생
+	- .ofNullable(T t) - 요소가 null이어도 Optional 객체 생성
+	- .get() : 조회 / 없으면(null) : NoSuchElementException 발생
+	- .orElse(기본값) : 없으면 기본값 대체
+	- .orElseThrow() : NoSuchElementException
+	- .orElseThrow(Supplier ...)
+	
+	- .boolean isPresent() : 값이 있으면 true, 없으면 false 
+	
+기본형을 처리하는 Optional 클래스	
+	- OptionalInt
+	- OptionalDouble
+	- OptionalLong
+	
+		- 기본형자료로 바로 처리하면 오토박싱, 언박싱을 하지 않아 효율이좋다
+
+
+---------------------------------------------------------------------------------------------------------
+
+스트림의 최종연산
+1. forEach()
+
+2. 
+	- allMatch() : 모든 요소의 조건식의 참일때
+	- anyMatch() : 어떠한 요소라도 조건식이 참일때
+	- noneMatch() : 모든 요소의 조건식이 거짓일 때
+	
+	- findFirst() : 가장 처음 요소 반환
+	- findAny() : 일부 요소 반환
+	
+3. 통계 - count(), sum(), average(), max(), min()
+count(), max(), min() - 모든 스트림에 있다
+
+sum(), average() - 기본 자료형 스트림(IntStream, LongStream, DoubleStream...)에 있다
+
+4. 리듀싱 - reduce()
+
+
+5. collect() : 데이터 수집 관련
+	Collectors : java.util.stream.Collectors
+	
+	- toList(), toSet(), toMap(Function keyMapper, Function valueMapper), 
+	  toCollection(Supplier ...), toArray()
+	  
+	- joining() : 문자열 결합
+	
+6. 그룹화와 분할 - Stream안의 데이터를 모으는 기능
+
+- 그룹화 // groupingBy() - 값에 따라서 Map
+- 분할 // partitioningBy()	- true, false 그룹 각 2개로 분할
+
+---------------------------------------------------------------------------------------------------------------
+

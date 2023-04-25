@@ -1,0 +1,106 @@
+여러 테이블을 하나의 테이를처럼 사용하는 조인
+
+1. 등가 조인(동등조건)
+	- 공통 값을 가지고 조인
+	- 내부 조인(INNER JOIN)
+	- 교집합
+	- 공통값이 있는 항목만 조회
+	
+	EX) SELECT * FROM EMP, DEPT
+		 WHERE EMP.DEPTNO = DEPT.DEPTNO;
+	
+	EX2 별칭)	SELECT E.*, D.DNAME FROM EMP E, DEPT D
+					WHERE E.DEPTNO = D.DEPTNO; -- 동등 JOIN, 내부 JOIN
+		 
+2. 비등가 조인
+	- 공통 값이 아닌, 비교를 통해 암묵적으로 조인
+	- 연결점X, 비교를 통해서 조인
+	
+	SALGRADE(급여등급)
+	EX) SELECT E.*, S.GRADE FROM EMP E, SALGRADE S // EMP의 전체, SALGRADE의 GRADE 선택
+		 WHERE E.SAL BETWEEN S.LOSAL AND S.HISAL; //  E의 급여
+		 
+3. 자체 조인
+	동일 테이블 내에서 조인
+	
+	EX) SELECT  
+			E1.EMPNO 직원번호,
+			E1.ENAME 직원명,
+			E2.MGR 관리자번호,
+			E2.ENAME 관리자명
+		 FROM EMP E1, EMP E2
+		 WHERE E1.MGR = E2.EMPNO;
+	
+	
+4. 외부 조인(OUTER JOIN)
+	+alpha(추가데이터)
+	
+	EX) SELECT * FROM DEPT;
+	
+		CREATE TABLE DEPT_SUB (
+			SUBNO NUMBER(9),
+			SNAME VARCHAR2(30),
+			DEPTNO NUMBER(20)
+		);
+		
+		SELECT * FROM DEPT_SUB;
+		INSERT INTO DEPT_SUB VALUES(10, '정보1', 10);
+		INSERT INTO DEPT_SUB VALUES(20, '정보2', 20);
+		
+		SELECT * FROM DEPT D, DEPT_SUB S
+		WHERE D.DEPTNO = S.DEPTNO(+);
+		-> DEPT와 DEPT_SUB를 조회, DEPTNO를 비교조회	(+) = 서브정보도 전체 조회하기
+	
+부서 정보를 조회 + 서브 정보가 있으면 추가로 조회
+(조회한 부서는 전체조회, 서브정보는 있으면 전체, 없으면 NULL)
+
+추가 정보를 제공하는 테이블(+)
+
+기준 테이블이 왼쪽, 추가 정보 테이블이 오른쪽 -> 왼쪽 외부 조인
+(LEFT OUTER JOIN)
+추가정보 테이블이 왼쪽, 기준 테이블이 오른쪽 -> 오른쪽 외부 조인
+(RIGHT OUTER JOIN)
+
+SQL-99 표준 문법으로 배우는 조인
+1. NATURAL JOIN
+	- 기본키 + 외래키
+	- 기본키, 외래키가 동일한 명칭의 컬럼일 때
+	EX) SELECT * FROM EMP E NATURAL JOIN DEPT D;
+
+2. JOIN ~ USING
+	- 기본키 + 외래키 조합이 아닌 경우도 사용 가능
+	USING(공통 컬럼명)
+	EX) SELECT * FROM EMP E [INNER] JOIN DEPT D USING(DEPTNO);
+
+3. JOIN ~ ON
+	- 조인되는 컬럼명이 동일하지 않는 경우
+	ON E.DEPTNO = D.DEPTNO
+	EX) SELECT E.EMPNO, E.ENAME, E.JOB, D.DNAME, D.LOC
+			FROM EMP E 
+			JOIN DEPT D ON E.DEPTNO = D.DEPTNO
+		 WHERE E.DEPTNO IN (20, 30);
+
+4. OUTER JOIN
+	1) LEFT OUTER JOIN (왼쪽 외부 조인)
+		EX) SELECT * FROM DEPT D
+				LEFT [OUTER] JOIN DEPT_SUB S USING(DEPTNO); // 컬럼명이 동일하니 USING(DEPTNO) 가능
+		EX2) SELECT * FROM DEPT D
+				LEFT JOIN DEPT_SUB S ON D.DEPTNO = S.DEPTNO; // 컬럼명이 다르니 ON
+	
+	2) RIGHT OUTER JOIN (오른쪽 외부 조인)
+	
+		EX) SELECT * FROM DEPT_SUB S
+					RIGHT JOIN DEPT D ON S.DEPTNO = D.DEPTNO;
+				
+	3) FULL OUTER JOIN(양쪽 외부 조인)
+		- 오라클, MSSQL에 있다
+		- MYSQL엔 없다
+		
+		EX) SELECT * FROM DEPT D
+				FULL JOIN DEPT_SUB S USING(DEPTNO);
+	
+	EMP
+		DEPTNO
+		
+		DEPT
+			DEPT_SUB
