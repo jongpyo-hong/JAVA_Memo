@@ -76,7 +76,7 @@
 				- 요청 body의 데이터 형식
 				- 정확하지 않으면 서버가 데이터를 변환X
 
-		- body에 요청 데이터(content-type)가 들어간다
+		- body에 요청 데이터가 들어간다
 			- 요청헤더 - content-type : application/x-www-form-urlencoded
 			
 	참고) 요청헤더 - content-type : application/json

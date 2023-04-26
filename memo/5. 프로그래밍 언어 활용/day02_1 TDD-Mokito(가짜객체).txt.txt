@@ -13,7 +13,6 @@ javax servlet-api
 
 
 servlet-api
-
 1. 모의 객체 생성
 	mock() 메서드
 	가짜 객체
