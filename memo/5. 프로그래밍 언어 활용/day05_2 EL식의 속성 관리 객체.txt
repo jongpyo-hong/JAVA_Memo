@@ -1,0 +1,27 @@
+속성 관리 객체
+PageContext pageContext
+HttpServletRequest request
+Http Session session
+ServletContext application
+
+pageContext < request < session < application
+
+- 지정
+setAttribute(String name, Object value)
+
+- 조회
+Object getAttribute(String name)
+
+- 제거
+removeAttribute(String name)
+
+범위
+			pageContext < request < session < application
+				- 속성값의 범위는 좁을수록 우선도가 높다
+					pageContext > request > session > application
+					
+	EL식 속성 범위 내장 객체
+		1) pageScope : pageContext범위의 속성값 조회
+		2) requestScope : request 범위의 속성값 조회
+		3) sessionScope : session 범위의 속성값 조회
+		4) applicationScope : application 범위의 속성값 조회
