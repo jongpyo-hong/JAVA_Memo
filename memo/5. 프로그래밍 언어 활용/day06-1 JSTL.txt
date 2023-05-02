@@ -1,0 +1,170 @@
+JSTL(JSP Standard Tag Library)
+커스텀 태그의 일종 - 외부 라이브러리
+jstl 1.2
+
+코어(core) 라이브러리 - 제어문, 반복문, 변수 ...
+<%@ taglig prefix="c" uri="http://java.sun.com/jstl/core" %>
+
+1. <c:set>
+	- EL식 속성값으로 추가
+	- var : 변수명
+	- value : 값 - 기본값 - 순자, 문자, 자바 변수, EL식 변수
+	- scope : 속성의 범위 결정
+		- page : 기본값(pageContext)
+		- request : request범위
+		- session : session 범위
+		- application : servletContext 범위
+			ex) <c:set var="num1" value="100" scope="request"/>
+----------------------------------------------------------------------------------	
+2. <c:remove>
+	- EL식 속성값을 제거
+	- var 변수명
+	- scope를 명시하지 않으면 전 범위의 EL식 변수를 제거
+	
+	- scope
+		: page
+		: request
+		: session
+		: application
+		
+		ex) <c:remove var="num" scope="request" />
+----------------------------------------------------------------------------------	
+3. <c:if> : 조건문 (if)
+		- test : EL식으로 조건을 처리한다
+				- true, false 같은 상수는 그냥 사용 가능하다
+		참고)
+			else는 없다
+			
+			ex)<c:set var="num" value="10" />	
+				<c:if test="${num > 5}">
+					${num}은 5보다 크다.
+				</c:if>
+----------------------------------------------------------------------------------
+4. <c:choose> : 다중 조건문(if, elseif, else)
+
+	<c:when> : (if, elseif)
+	<c:otherwise> : (else)
+	
+		ex) <c:set var="age" value="25" />
+			<c:choose>
+				<c:when test="${age < 8}">
+					유치원생
+				</c:when>
+				<c:when test="${age < 14}">
+					초등학생
+				</c:when>
+				<c:when test="${age < 17}">
+					중학생
+				</c:when>
+				<c:when test="${age < 20}">
+					고등학생
+				</c:when>
+				<c:otherwise>
+					성인
+				</c:otherwise>
+			</c:choose>
+----------------------------------------------------------------------------------	
+5. <c:forEach> : 반복문
+	- 배열
+	- 컬렉션(Collection - List, Set)
+	- Iterator
+	- ,로 구분한 문자열
+	- 횟수가 정해진 반복
+		- items : EL식 변수
+		- begin : 시작번호
+		- end : 종료번호
+		- var : 현재 번호
+		- step : 증감 단위 - 기본값 1
+		
+			- ex)  <c:forEach var="num" begin="1" end="10" step="2">
+						<h1>${num}. 반복</h1>
+					</c:forEach>
+	
+	varStatus : 반복 상태 값
+				.index : 0부터 시작하는 순서 번호
+				.count : 1부터 시작하는 순서 번호
+				.first : 첫번째 인지 확인
+				.last : 마지막 인지 확인 
+				.current : 현재 반복 요소
+				
+			- ex) <ul>
+						<c:forEach var="item" items="${items}" varStatus="status">
+							<li>
+								${status.index} / ${status.count} /
+								first : ${status.first} / last : ${status.last} /
+								${item.subject} / ${item.poster}
+							</li>
+							<li>
+								${status.current.subject} / ${status.current.poster}
+							</li>
+						</c:forEach>
+					</ul>
+----------------------------------------------------------------------------------					
+6. <c:forTokens> : 문자열 자르기
+	- StringTokenizer
+	
+	- items : "문자열"
+	- delims : "패턴" 
+	- var : 패턴으로 분리된 문자열
+		
+		- ex : <c:forTokens var="item" items="사과, 배# 오렌지, 감_ 멜론" delims=",#_">
+					${item}<br>
+				</c:forTokens>
+	
+----------------------------------------------------------------------------------
+7. <c:catch> : 예외처리
+
+	ex) <c:catch var="e">
+		<%
+			String str = null;
+			str.toUpperCase();
+		%>
+		</c:catch>
+		<c:if test="${e != null}">
+			<%-- ${e.getMessage()} --%>
+			${e.message}
+		</c:if>
+
+----------------------------------------------------------------------------------
+8. <c:redirect> 
+	- HttpServletResponse
+		- sendRedirect
+		
+		- url : 주소
+		
+		<c:param name="..." value="..." /> -> GET 요청 데이터 추가
+		
+			ex) <c:redirect url="Ex09.jsp">
+					<c:param name="key1" value="value1" />
+					<c:param name="key2" value="value2" />
+				</c:redirect>
+
+----------------------------------------------------------------------------------				
+9. <c:import>
+	- <jsp:include >와 비슷하다
+	
+	차이점
+		액션태그의 include
+		(<jsp:include page="..." ...>)
+			- 서버자원 (jsp, 서블릿, html, text ...)
+			
+		<c:import ...>
+			- 현재 서버자원 + 외부 서버자원 추가 가능
+			- url : 버퍼에 추가할 자원에 대한 경로
+			- var : 출력 결과를 EL식 변수에 담을 수 있다
+			
+----------------------------------------------------------------------------------
+10. <c:url>
+11. <c:out>
+
+포매팅(fmt) 라이브러리 - 형식화 (날짜, 숫자, 지역화 - 다국어, 시간 등)
+1. <fmt: formatDate>
+2. <fmt:formatNumber>
+3. <fmt:setLocale>
+4. <fmt:timeZone>
+5. <fmt:setTimeZone>
+6. <fmt:setBundle>
+7. <fmt:bundle>
+8. <fmt:requestEncoding value="utf-7" />
+
+함수(function) 라이브러리
