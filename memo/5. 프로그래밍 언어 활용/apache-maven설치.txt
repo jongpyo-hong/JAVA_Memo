@@ -6,7 +6,7 @@
 
 3-1 . (없으면) %JAVA_HOME%bin -> 시스템변수에 JAVA_Home 있는지 확인
 3-2 . (없으면)C\program FIles\Java\jdk-11 경로복사후 시스템 변수편집// 변수값에 복사(변수이름 : JAVA_HOME)
-3-3. 환경변수 -> 시스템 -> Path -> %JAVA_HOME%\bin 추가
+3-3 . 환경변수 -> 시스템 -> Path -> %JAVA_HOME%\bin 추가
 
 4. 설치후 cmd -> mvn -v 입력후 확인
 
