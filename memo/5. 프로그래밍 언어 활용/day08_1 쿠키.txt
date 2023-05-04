@@ -1,0 +1,30 @@
+쿠키
+1. 쿠키란?
+	- 개개인의 개별적인 서비스를 제공하기 위한 데이터
+	- 서버가 요청, 브라우저가 응답
+
+2. 쿠키의 동작과정
+- 쿠키 생성단계
+	서버에서 응답헤더를 통해 Set-Cookie
+		- Set-Cookie : 키=값; 키=값;
+
+- 쿠키 저장단계
+	- 브라우저에 저장 (개별적인 데이터를 보관하기 위해서)
+	
+- 쿠키 전송단계
+	- 요청 시 요청 헤더와 함께 전송
+	*요청 헤더 - cookie
+
+3. 쿠키 생성 요청
+	HttpServletResponse
+		addCookie 
+
+4. 쿠키 정보
+	HttpServletRequest
+		Cookie[] getCookies()
+
+5. 쿠키 삭제
+	- 쿠키가 만료되면(Max Age) -> 브라우저가 삭제한다
+	- 쿠키 삭제는 현재 쿠키의 Max Age를 만료시키면 된다
+	- Cookie
+		- setMaxAge(0)

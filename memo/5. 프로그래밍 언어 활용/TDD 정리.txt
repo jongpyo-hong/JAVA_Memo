@@ -1,0 +1,22 @@
+TDD
+
+TDD 테스트 주도 설계
+	- 가장 통과가 쉬운 테스트 부터 설계하는것이 원칙이다
+	- 지속적인 리팩토링 과정이 필요하다(코드의 반복이 있으면 리팩토링)
+
+JUnit5 - 단위 테스트 단언
+	- 의존성
+		- Jupiter API Junit
+Mockito - 모의객체
+	- 의존성
+		- Mockito Core
+		
+MVC
+
+M(Model) - 기능 (Service)
+				- DTO
+				- DAO
+				- Validator
+			- 회원가입
+			
+V()

@@ -1,0 +1,76 @@
+커스텀 액션
+1. 커스텀 액션을 만드는 방법
+	태크 파일(.tag) -> 번역 -> SimpleTag
+	
+	클래스 파일(SimpleTag - SimpleTagSupport 클래스)
+	
+2. 태그파일을 이용해서 커스텀 액션 만들기
+
+		1) 태그 파일에서 사용할 수 있는 지시어
+		<%@ tag .... %>
+		tag : page 속성과 매우 비슷하다
+		
+		<%@ include file="" %>
+		<%@ attribute name="속성명" type="속성 타입" : 태그의 속성값 %>
+			type : java.lang.String : 기본값
+			
+				-기본 자료형 : 기본 자료형의 래퍼클래스
+				정수 : java.lang.Integer, java.lang.Long
+			
+		2) required : true (필수 속성)
+			
+		3) <%@ variable
+			-> EL식 변수로 사용가능
+			두 수 중에서 큰 수 반환
+			
+		4) @tag
+			body-content
+						- empty : 단일태그
+						- scriptless : 열린태그 ~ 닫힌태그 // java코드를 쓸 수 없다, EL식, 액션태그, 타 태그를 사용한다
+						- tagdependent : 열린태그 ~ 닫힌태그 // 내용을 텍스트로만 인식한다
+						
+			<br>
+			<div>내용</div> - body
+			
+			<jsp:doBody />
+			
+	- 한글을 포함하는 태그 파일
+	- 어트리뷰트를 지원하는 태그 파일
+	- 태그 파일의 내장 변수
+
+3. 동적 어트리뷰트를 지원하는 태그파일
+4. 커스텀 액션의 본체를 처리하는 태그파일
+5. 변수를 지원하는 커스텀 액션
+	- <%@variable name-given="result" variable-class="java.lang.Integer" scope="AT_END" %>
+	- <c:set var="result" value="100" />
+		
+		- scope 
+				- AT_BEGIN : 태그 위쪽
+				- NESTED : 태그 안쪽
+				- AT_END : 태그 아래쪽
+				
+		- name-given : EL식 변수명 고정
+		- name-from-attribute : 별도의 속성으로 정한 값 으로 변수명을 결정
+		- rtexprvalue : EL식 변수 사용 불가
+---------------------------------------------------------------------------------------------------------------------------------------------------------	
+	
+커스텀 태그를 이용한 레이아웃 구성
+
+M(Model) - Service
+
+V(View) - jsp
+
+C(Contoller) - Servlet
+
+RequestDispatcher
+	- forward
+	- include
+	
+<jsp:forward />
+<jsp:include />
+
+- 배열, 컬렉션
+	- <c:forEach
+	
+addCss ->
+addScript ->
