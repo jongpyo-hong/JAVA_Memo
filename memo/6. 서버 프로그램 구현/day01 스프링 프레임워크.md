@@ -22,18 +22,21 @@
 
 - spring-context (5.3.27버전)
 
-## 3. 스프링은 객체 컨테이너
-![container](C:/Users/Administrator/Desktop/홍종표_/image/container)
+## 3. 스프링은 객체 컨테이너 - 객체 관리 기능
+-   AnnotationConfigApplicationContext
+-   GenericXmlAppicationContext
+-   GenericGroovyApplicationContext
 
 ### IOC (Inversion Of Control) - 제어의 역전
+- 제어(객체생성, 코드구현 등)
 - 주체를 개발자에서 스프링으로 변경한다
 
 ### 객체를 관리 
 #### - 개발자 대신 스프링이 객체를 관리
 - 1) 싱글톤 객체(SingleTon)
-- 2) 의존 주입(객체조립)
+- 2) 의존 주입(DI : Denpendency Injection - 객체조립)
 
-## 4. 스프링 DI(Dependency injection - 의존주입)
+## 4. 스프링 DI(Dependency Injection - 의존주입)
 
 ## 5. 객체 조립기
 
