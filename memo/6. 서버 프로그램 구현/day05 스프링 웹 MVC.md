@@ -105,7 +105,7 @@
         - VeiwResolver : 요청 처리 결과를 생성할 View를 찾아주고 View는 최종적으로 클라이언트에 응답을 생성해서 전달한다.
           - @RequestParam
 
-<img src="C:\Users\Administrator\Desktop\홍종표_\image\DispatcherServlet.png" width="80%">
+<img src="C:\Users\Administrator\Desktop\홍종표_\홍종표_Memo\image\DispatcherServlet.png" width="80%">
 
 #### - 요청 방식
 - @GetMapping
