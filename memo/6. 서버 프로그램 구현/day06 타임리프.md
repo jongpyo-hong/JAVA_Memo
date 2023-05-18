@@ -14,7 +14,9 @@
 -> 식 객체 #temporals
 
 
-### 타임리프 기본문법
+## 타임리프 기본문법
+
+------------------------------------------------------------------------------
 1) 타임리프의 주요 식(expression)
 
          1) 변수식 : ${속성}
@@ -47,8 +49,8 @@
 
    - 커스텀 타임리프
 
-         - ${@스프링빈 이름.메서드명/속성명}
-         - *{@스프링빈 이름.메서드명/속성명}
+         - ${@커스텀한 스프링빈 이름.메서드명/속성명}
+         - *{@커스텀한 스프링빈 이름.메서드명/속성명}
             
 
 3) th:text : 식의 내용을 텍스트로 출력할 때 주로 사용한다
@@ -83,6 +85,34 @@
 7) th:object
 
 
-8) #temporals : 날짜의 형식(format) 설정 : th:text="*{#temporals.format(regDt, 'yyyy.MM.dd')}"
+8) #temporals : 날짜의 형식(format) 설정
 
-### 스프링 MVC 폼과 에러 메시지 연동
+         - th:text="*{#temporals.format(regDt, 'yyyy.MM.dd')}"
+
+## 스프링 MVC 폼과 에러 메시지 연동
+
+-------------------------------------------------------------------------------
+
+## 타임리프 페이지 레이아웃
+
+-------------------------------------------------------------------------------
+### 의존성
+      -  thymeleaf layout
+
+
+- th:replace -> 템플릿 파일 추가 (body 태그 내에 헤더, 푸터는 따로 파일을 만들어 설정한다)
+   
+         ex) outline 패키지의 header, footer를 main의 body태그 안에 주입
+             layout 패키지의 main을 member 패키지의 html 파일 안에 주입
+
+- addResourceHandlers : 정적 자원에 대한 경로를 설정한다
+
+         ex) resources 패키지 내의 static 패키지에 css 패키지 : style.css
+                                                  js 패키지 : common.js
+
+             MvcConig에 메서드 재정의
+               @Override
+              public void addResourceHandlers(ResourceHandlerRegistry registry) {
+              registry.addResourceHandler("/**")
+              .addResourceLocations("classpath:/static/");
+              }
