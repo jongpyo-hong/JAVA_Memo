@@ -76,13 +76,86 @@
 
     - @CookieValue -> 쿠키값을 주입한다
 
-### 3. 날짜 값 변환
+#### - 인터셉터
 
-### 4. @PathVariable
+        - boolean prohandle(...)
+            : 요청 처리전 공통 기능
+            : 통제 제어
+                - 반환값이 false : 컨트롤러 빈, 요청 메서드 실행 X
+                - 반환값이 true : 컨트롤러 빈 실행, 요청 메서드 실행
+
+        - void postHandle(...)
+            : 요청 처리 후 ModelAndView 반환 직후 공통기능
+
+        - void afterCompletion(...)
+            : 응답완료 후 공통기능
+
+- WebMvcConfigurer 
+    - addInterceptors(...) : 인터셉터 설정 메서드
+
+### 3. 날짜 값 변환
+- 커맨드 객체 날짜 -> 문자열
+- 형식을 명시하지 않으면 오류 발생 (java.time.*)
+- 형식 명시
+  - @DateTimeFormat
+    - pattern="패턴"
+    
+            - @DateTimeFormat(pattern = "yyyy-MM-dd")
+  
+            - 에러 메시지 : typeMismatch.java.time.LocalDate=날짜 형식이 올바르지 않습니다 (ex) 2023-05-20)
+
+    
+- 형식 검증 실패 -> typeMismatch 메세지 코드
+
+### 4. @PathVariable - 경로 변수
+
+            @GetMapping("/info/{id}") // {...} : 중괄호 안쪽에 입력하면 경로 변수가 된다
+            public String info(@PathVariable(required = false, name = "id") String userId) { 
+            // 경로변수를 사용하려면 매개변수가 경로변수와 같아야한다
+            // 경로변수가 매개변수와 다르다면 @PathVariable(name="경로변수") name 에 경로변수값을 넣으면 된다
+                                                                                    
+            System.out.println(userId);
+            return "member/info";
+            }
 
 ### 5. 컨트롤러 예외처리
 
+- @ExceptionHandler 
+        
+    - 발생할 수 있는 Class 클래스
+    - 에러페이지에 대한 설정
+  
+  * 처리 메서드에 주입 가능한 객체
+
+          - 발생한 예외 객체
+          - 서블릿 기본 객체
+              (HttpServletRequest, HttpServletResponse, HttpSession ...)
+          - Model model
+
+- @ControllerAdvice : 공통 컨트롤러
+
+    - 적용 우선순위
+        
+        - @Controller > @ControllerAdvice
+
 ### 6. 파일 업로드
+- 설정 : 파일 1개의 최대 용량, 전체 최대 용량 설정 - (web.xml)
+
+            <multipart-config>
+            <max-file-size>20971520</max-file-size> <!-- 20MB -->
+            <max-request-size>62914560</max-request-size> <!-- 60MB -->
+            </multipart-config>
+- MultipartFile 인터페이스
+
+
+- enctype="multipart/form-data : 양식에 속성으로 추가해야 요청헤더의 데이터가 바뀐다
+    
+    - multipart -> 양식 데이터 파트, 파일 데이터 파트
+  
+            - <form method="post" th:action="@{/file/upload}" enctype="multipart/form-data">
+    - 정적 경로 설정
+    
+        - WebMvcConfigurer :: addResourceHandlers
 
 ### 7. 프로필
     - @Profile
