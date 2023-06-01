@@ -146,11 +146,6 @@ H2 데이터베이스 -> 테스트
 
 
 ## 2. Entity 설계하기
-- 엔티티(Entity)
-  
-  - 데이터베이스의 테이블에 대응하는 클래스
-  - @Entity가 붙은 클래스는 JPA에서 관리하며 엔티티라고 한다.
-
 - 엔티티 매핑 관련 어노테이션
 
 
@@ -436,82 +431,32 @@ H2 데이터베이스 -> 테스트
             - not
 
 ## 7. 연관 관계 매핑
-- 외래키 설정
-  - 연관 관계 매핑의 종류
+- 연관 관계 매핑의 종류
 
-        - 다대일(N:1) : @ManyToOne
-              - 게시글 여러개(BoardData) : 회원 1명(Member)
+      - 다대일(N:1) : @ManyToOne
+            - 게시글 여러개(BoardData) : 회원 1명(Member)
+            - Many쪽에 외래키 추가
 
-              - 외래키 -> Many : 엔티티명_기본키명 (member_user_no)
-              - @JoinColumn(name="외래키 필드명") : 외래키 필드 이름 설정
+      - 일대다(1:N) : @OneToMany
+            - 회원 1명 : 다수의 게시글
+            - mappedBy: 연관관계 주인 명시
+            - *연관관계 주인 : 관계를 좌지우지 할 수 있는 엔티티, Many에 외래키가 있기에 관계의 주인은 Many
 
+      - 일대일(1:1) : @OneToOne
+      - 다대다(N:N) : @ManyToMany
 
-              - fetch : FetchType.EAGER : 즉시 로딩 (기본값), 처음부터 관계 매핑되어 있는 데이터를 조회 = 조인을 처음부터 한다.
-                        FetchType.LAZY : 지연 로딩, 처음에는 현재 엔티티의 데이터만 조회, 매핑되어 있는 데이터는 요청시에 쿼리 실행 = (조인을 처음부터 하지 않는다)
-                                      
-                            -*** Global 전략 : 지연로딩(LAZY) - 필요할때만 즉시 로딩(EAGER)
-                               - N+1 문제 : 목록 출력, 매핑되어 있는 갯수만큼 쿼리가 증가하는 문제가 있다
-                                해결방안 )
-                                      1) JPQL fetch 조인 - @Query // sql문을 직접 작성해서 즉시로딩으로 바꾸면 된다
-                                      2) QueryDsl - JPAQueryFactory -> JPAQuery.fetchJoin(); 사용
-                                                        
-
-        - 일대다(1:N) : @OneToMany
-                - 회원 1명(One) : 다수의 게시글(Many)
-                - mappedBy: 연관관계 주인 명시
-                - *연관관계 주인 : 관계를 좌지우지 할 수 있는 엔티티, Many 쪽에 외래키가 있기에 관계의 주인은 Many이다
-                     - BoardData(Many), Member(One)
-
-                      - 주의) lombok과 함께 사용될 때 순환 참조 오류 발생(메모리 부족)
-                      - toString() 메서드의 멤버 변수의 값을 getter를 통해서 출력 하기 때문
-                        -> boardData -> toString() -> getMember() -> toString() -> getBoardDatas() -> toString...
-
-                      - 해결방법)
-                          1) to String 따로 정의 : 출력은 멤버 변수 직접 출력
-                          2) 관계 매핑 되어 있는 항목을 toString에서 출력 배제 (@ToString.Exclude)
-
-        - 일대일(1:1) : @OneToOne
-                  - 회원(One) <-> 주소(One)
-
-
-        - 다대다(N:N) : @ManyToMany
-                  - 상품(Product) <-> 판매자(Seller)
-
-
-
-- @Bulider : 생성자 - private
+      - 외래키 -> Many : 엔티티명_기본키명 (member_user_no)
+      - @JoinColumn(name="외래키 필드명") : 외래키 필드 이름 설정
 
 ## 8. 영속성 전이
 
-
 ## 9. 지연로딩
-- fetch 
-  - FetchType.EAGER : 즉시 로딩 (기본값), 처음부터 관계 매핑되어 있는 데이터를 조회 = 조인을 처음부터 한다.
-  
-  - FetchType.LAZY : 지연 로딩, 처음에는 현재 엔티티의 데이터만 조회, 매핑되어 있는 데이터는 요청시에 쿼리 실행 = (조인을 처음부터 하지 않는다)
-
-                -*** Global 전략 : 지연로딩(LAZY) - 필요할때만 즉시 로딩(EAGER)
-                   - N+1 문제 : 목록 출력, 매핑되어 있는 갯수만큼 쿼리가 증가하는 문제가 있다
-                    해결방안 )
-                          1) JPQL fetch 조인 - @Query // sql문을 직접 작성해서 즉시로딩으로 바꾸면 된다
-                          2) QueryDsl - JPAQueryFactory -> JPAQuery.fetchJoin(); 사용
-
 
 ## 10. 공통 속성화
-- 스프링 시큐리티
 - 상속을 통한 공통 속성화
 - @MappedSuperclass
 - 추상 클래스로 정의한다 (테이블을 만들지 않는다)
 - Auditing을 이용한 엔티티 공통 속성화
-
-
-- 여러 컬럼을 조합 -> PK(기본키) -> @IdClass
-
-  * 조회수
-    * 회원 
-        - 게시글번호(id) + 회원번호(uid) -> DB 통계용 데이터 저장
-    * 비회원
-        - 게시글번호(id) + (IP + 브라우저 정보(User-Agent)) - uid
 
 
 * lombok
