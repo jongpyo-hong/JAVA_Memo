@@ -11,3 +11,14 @@
   - @ManyToMany
   
 - 공통 속성화 정리
+
+## 2023/06/02 강의
+
+### Log
+
+- 연관관계 매핑 복습
+
+- 영속성 전이
+  - CASCADE 메서드 정리
+
+- Spring Security
