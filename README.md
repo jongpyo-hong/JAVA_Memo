@@ -22,3 +22,16 @@
   - CASCADE 메서드 정리
 
 - Spring Security
+
+## 2023/06/05 강의
+
+### Log
+
+- join 프론트 화면 구현
+
+- login 프론트 화면 구현
+  - 아이디 저장 (쿠키) 구현
+
+- Spring Security
+
+- error 페이지(401, 403, 404) 구현
